@@ -1,0 +1,91 @@
+<h4> Vendor View</h4>
+<ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-zig-zag"></ngx-spinner>
+<mat-card class="" *ngIf="dataset">
+    <mat-card-content>
+        <mat-grid-list [cols]="3" gutterSize="5px" rowHeight="60px">
+            <mat-grid-tile>
+                <mat-form-field>
+                    <input matInput placeholder="Vendor Code" value="{{dataset.vendorCode}}" disabled>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field>
+                    <input matInput placeholder="Vendor Name" value="{{dataset.vendorName}}" disabled>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field>
+                    <input matInput placeholder="Vendor Address" value="{{dataset.address}}" disabled>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field>
+                    <input matInput placeholder="Vendor Email Id" value="{{dataset.emailId}}" disabled>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field>
+                    <input matInput placeholder="Vendor GST Number" value="{{dataset.gstNumber}}" disabled>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field>
+                    <input matInput placeholder="Vendor Location" value="{{dataset.location}}" disabled>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field>
+                    <input matInput placeholder="Vendor Type" value="{{dataset.vendorType}}" disabled>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field>
+                    <input matInput placeholder="Vendor Castrol GSTN" value="{{dataset.castrolGSTN}}" disabled>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field>
+                    <input matInput placeholder="Payment Terms" value="{{dataset.paymentTerms}}" disabled>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field>
+                    <input matInput placeholder="Vendor Created At" value="{{dataset.createdAt | date:'dd/M/yyyy'}}" disabled>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field>
+                    <input matInput placeholder="Vendor Updated At" value="{{dataset.updatedAt | date:'dd/M/yyyy'}}" disabled>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field>
+                    <input matInput placeholder="Vendor Ceated By" value="{{dataset.createdBy}}" disabled>
+                </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+                <mat-form-field>
+                    <input matInput placeholder="Vendor Updated By" value="{{dataset.updatedBy}}" disabled>
+                </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </mat-card-content>
+</mat-card>
+
+
+
+<div>
+    <button mat-raised-button class="home-button" routerLink="/view-edit-vendor"><mat-icon>keyboard_arrow_left</mat-icon> Back</button>
+</div>

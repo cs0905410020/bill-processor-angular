@@ -1,0 +1,65 @@
+<div>
+    <button mat-raised-button class="home-button" routerLink="/home"><mat-icon>home</mat-icon> Home</button>
+</div>
+<div>
+    <button mat-raised-button align="end" class="download-excel" (click)="downloadCfaBillExcelFile()"><mat-icon>save_alt</mat-icon> Export Data</button>
+    <button mat-raised-button align="start" class="download-excel" (click)="downloadCfaBillExcelFileByDays()"><mat-icon>save_alt</mat-icon>Download Report By Days</button>
+</div>
+<div class="filter-text">
+    <input  #inputRef  (input)="onSearchChange(inputRef.value)" placeholder="Enter Text to Filter">
+    <input  #billNumberVal [(ngModel)]="billNumber" placeholder="Enter Bill Number">
+    <button mat-raised-button class="search-button" type="submit" (click)="onSearch(billNumberVal.value)">Search</button>
+</div>
+<h4> CFA Bill Register</h4>
+<ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-zig-zag"></ngx-spinner>
+<form *ngFor="let cfaBill of filteredCfaBillList | paginate : { itemsPerPage:numberOfElement, currentPage:page, id : '1', totalItems: totalItem } ">
+    <mat-card class="cfa-bill-card">
+        <mat-card-content>
+            <mat-dialog-content>
+                <mat-grid-list [cols]="7" gutterSize="1px" rowHeight="80px">
+                    <mat-grid-tile>
+                        <mat-form-field>
+                            <input matInput placeholder="Bill Number" value="{{cfaBill.billNumber}}" disabled>
+                        </mat-form-field>
+                    </mat-grid-tile>
+
+                    <mat-grid-tile>
+                        <mat-form-field>
+                            <input matInput placeholder="Bill Received Date" value="{{cfaBill.billReceivedDate | date:'dd/M/yyyy'}}" disabled>
+                        </mat-form-field>
+                    </mat-grid-tile>
+
+                    <mat-grid-tile>
+                        <mat-form-field>
+                            <input matInput placeholder="Status" value="{{cfaBill.status}}" disabled>
+                        </mat-form-field>
+                    </mat-grid-tile>
+
+                    <mat-grid-tile>
+                        <mat-form-field>
+                            <input matInput placeholder="Status As on Date" value="{{getStatusAsOnDate(cfaBill.billReceivedDate)}}" disabled>
+                        </mat-form-field>
+                    </mat-grid-tile>
+
+                    <mat-grid-tile>
+                        <button mat-raised-button color="accent" type="submit" (click)="viewCfaBill(cfaBill)">View</button>
+                    </mat-grid-tile>
+
+                    <mat-grid-tile *ngIf="'Closed'!==cfaBill.status || ('Closed'===cfaBill.status && isAdmin)">
+                        <button mat-raised-button color="accent" type="submit" (click)="editCfaBill(cfaBill)">Edit</button>
+                    </mat-grid-tile>
+                    <mat-grid-tile *ngIf="isAdmin">
+                        <button mat-raised-button color="accent" type="submit" (click)="deleteCfaBill(cfaBill.serialNumber)">Delete</button>
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </mat-dialog-content>
+        </mat-card-content>
+    </mat-card>
+</form>
+<div class="textcenter" *ngIf="isPagination">
+    <pagination-controls *ngIf="totalItem && numberOfElement" (pageChange)="page = getCfaServiceData($event)" id="1" autohide="true" [maxSize]="0" [directionLinks]="true" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page"></pagination-controls>
+    <span *ngIf="totalItem && currentPage">You are on page {{currentPage}} of {{totalPages}}</span>
+</div>
+<div>
+    <button mat-raised-button class="home-button" routerLink="/home"><mat-icon>home</mat-icon> Home</button>
+</div>

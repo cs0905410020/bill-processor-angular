@@ -1,0 +1,44 @@
+<mat-card class="cfa-bill-card">
+    <mat-card-content>
+        <mat-dialog-content>
+            <mat-grid-list [cols]="7" gutterSize="1px" rowHeight="80px">
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Bill Number" value="{{billDetails.invoiceNumber}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Bill Date" value="{{billDetails.invoiceDate}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Pan Number" value="{{billDetails.panNumber}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="GST Number" value="{{billDetails.gstNumber}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="PO Number" value="{{billDetails.poNumber}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="PO Date" value="{{billDetails.poDate}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </mat-dialog-content>
+    </mat-card-content>
+</mat-card>
+<div>
+    <button mat-raised-button class="home-button" routerLink="/home"><mat-icon>home</mat-icon> Home</button>
+</div>

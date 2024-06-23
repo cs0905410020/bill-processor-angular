@@ -1,0 +1,86 @@
+<div>
+    <button mat-raised-button class="home-button" routerLink="/home"><mat-icon>home</mat-icon> Home</button>
+    <button mat-raised-button class="home-button" mat-button [matMenuTriggerFor]="downloadMenu">Download Data</button>
+    <button mat-raised-button class="home-button" mat-button routerLink="/verify-vendor-bill">Verify Vendor Bill</button>
+    <mat-menu #downloadMenu="matMenu" yPosition="below" xPosition="after" [overlapTrigger]="false">
+        <button mat-button class="mail-button"  type="button" (click)="downloadCfaContract()">Download Cfa Contract</button>
+        <button mat-button class="mail-button"  type="button" (click)="downloadTripMaster()">Download Trip Master</button>
+        <button mat-button class="mail-button"  type="button" (click)="downloadFreightMaster()">Download Fright Master</button>
+        <button mat-button class="mail-button"  type="button" (click)="downloadDieselMaster()">Download Diesel Index</button>
+    </mat-menu>
+</div>
+<div class="filter-text">
+    <button mat-raised-button class="download-excel" (click)="downloadTransportBillExcelFile()"><mat-icon>save_alt</mat-icon> Bill Register</button>
+    <button mat-raised-button class="download-excel" (click)="downloadTransportBillExcelFileByDays()"><mat-icon>save_alt</mat-icon> Overdue Report as on date</button>
+    <mat-form-field class="due-dates">
+        <mat-select placeholder="Select Report" [(ngModel)]="reportTypeSelected">
+            <mat-option *ngFor="let reportType of reportTypes" [value]="reportType.value">
+                {{ reportType.value }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="due-dates">
+        <input matInput [matDatepicker]="dueFromDate" [(ngModel)]="dueStartDate" placeholder="Choose from date" (click)="dueFromDate.open()" (focus)="dueFromDate.open()">
+        <mat-datepicker-toggle matSuffix [for]="dueFromDate"></mat-datepicker-toggle>
+        <mat-datepicker #dueFromDate></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="due-dates">
+        <input matInput [matDatepicker]="dueToDate" [(ngModel)]="dueEndDate" placeholder="Choose to date" (click)="dueToDate.open()" (focus)="dueToDate.open()">
+        <mat-datepicker-toggle matSuffix [for]="dueToDate"></mat-datepicker-toggle>
+        <mat-datepicker #dueToDate></mat-datepicker>
+    </mat-form-field>
+    <button mat-raised-button class="download-excel" [disabled]="!dueStartDate || !dueEndDate || !reportTypeSelected" (click)="downloadTransportBillReports()"><mat-icon>save_alt</mat-icon> Download Report</button>
+</div>
+<div class="filter-text">
+    <input  #inputRef  (input)="onSearchChange(inputRef.value)" placeholder="Enter Text to Filter">
+    <input  #billNumberVal [(ngModel)]="billNumber" placeholder="Enter Bill Number">
+    <button mat-raised-button class="search-button" type="submit" (click)="onSearch(billNumberVal.value)">Search</button>
+</div>
+<h4> Transport Bill Register</h4>
+<ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-zig-zag"></ngx-spinner>
+<form *ngFor="let tranportBill of filteredTranportBillList | paginate : { itemsPerPage:numberOfElement, currentPage:page, id : '1', totalItems: totalItem } ">
+    <mat-card class="transport-bill-card">
+        <mat-card-content>
+            <mat-grid-list [cols]="7" gutterSize="1px" rowHeight="80px">
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Bill Number" value="{{tranportBill.billNumber}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Bill Received Date" value="{{tranportBill.billReceivedDate | date:'dd/M/yyyy'}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Status" value="{{tranportBill.status}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Status As on Date" value="{{getStatusAsOnDate(tranportBill.billReceivedDate)}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <button mat-raised-button color="accent" type="submit" (click)="viewTransportBill(tranportBill)">View</button>
+                </mat-grid-tile>
+                <mat-grid-tile *ngIf="'Closed'!==tranportBill.status || ('Closed'===tranportBill.status && isAdmin)">
+                    <button mat-raised-button color="accent" type="submit" (click)="editTransportBill(tranportBill)">Edit</button>
+                </mat-grid-tile>
+                <mat-grid-tile *ngIf="isAdmin">
+                    <button mat-raised-button color="accent" type="submit" (click)="deleteTransportBill(tranportBill.serialNumber)">Delete</button>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </mat-card-content>
+    </mat-card>
+</form>
+<div class="textcenter" *ngIf="isPagination">
+    <pagination-controls *ngIf="totalItem && numberOfElement" (pageChange)="page = getTransportBillData($event)" id="1" autohide="true" [maxSize]="0" [directionLinks]="true" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page"></pagination-controls>
+    <span *ngIf="totalItem && currentPage">You are on page {{currentPage}} of {{totalPages}}</span>
+</div>
+<div>
+    <button mat-raised-button class="home-button" routerLink="/home"><mat-icon>home</mat-icon> Home</button>
+</div>

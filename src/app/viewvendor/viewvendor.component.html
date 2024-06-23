@@ -1,0 +1,58 @@
+<div>
+    <button mat-raised-button class="home-button" routerLink="/home"><mat-icon>home</mat-icon> Home</button>
+</div>
+<div>
+    <button mat-raised-button class="home-button" (click)="downloadVendorsExcelFile()"><mat-icon>save_alt</mat-icon> Export Data</button>
+</div>
+<div class="filter-text">
+        <input #inputRef  (input)="onSearchChange(inputRef.value)" placeholder="Enter Text to Filter">
+        <input  #vendorCodeVal [(ngModel)]="vendorCode" placeholder="Enter Vendor Code">
+        <button mat-raised-button class="search-button" type="submit" (click)="onSearch(vendorCodeVal.value)">Search</button>
+</div>
+<ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-zig-zag"></ngx-spinner>
+<form *ngFor="let vendor of filteredVendorLists | paginate : { itemsPerPage:numberOfElement, currentPage:page, id : '1', totalItems: totalItem } ">
+    <mat-card class="vendor-card">
+        <mat-card-content>
+            <mat-dialog-content>
+                <mat-grid-list [cols]="6" gutterSize="1px" rowHeight="80px">
+                    <mat-grid-tile>
+                        <mat-form-field>
+                            <input matInput placeholder="Vendor Code" value="{{vendor.vendorCode}}" disabled>
+                        </mat-form-field>
+                    </mat-grid-tile>
+
+                    <mat-grid-tile>
+                        <mat-form-field>
+                            <input matInput placeholder="Vendor Name" value="{{vendor.vendorName}}" disabled>
+                        </mat-form-field>
+                    </mat-grid-tile>
+
+                    <mat-grid-tile>
+                        <mat-form-field>
+                            <input matInput placeholder="Vendor Location" value="{{vendor.location}}" disabled>
+                        </mat-form-field>
+                    </mat-grid-tile>
+
+                    <mat-grid-tile>
+                        <button mat-raised-button color="accent" type="submit" (click)="viewvendor(vendor)">View</button>
+                    </mat-grid-tile>
+
+                    <mat-grid-tile>
+                        <button mat-raised-button color="accent" type="submit" (click)="editvendor(vendor)">Edit</button>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                            <button mat-raised-button color="accent" type="submit" (click)="deleteVendor(vendor.vendorId)">Delete</button>
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </mat-dialog-content>
+        </mat-card-content>
+    </mat-card>
+</form>
+
+<div class="textcenter" *ngIf="isPagination">
+    <pagination-controls *ngIf="totalItem && numberOfElement" (pageChange)="page = getVendorData($event)" id="1" [directionLinks]="true" autohide="true" [maxSize]="0" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page"></pagination-controls>
+    <span *ngIf="totalItem && currentPage">You are on page {{currentPage}} of {{totalPages}}</span>
+</div>
+<div>
+    <button mat-raised-button class="home-button" routerLink="/home"><mat-icon>home</mat-icon> Home</button>
+</div>

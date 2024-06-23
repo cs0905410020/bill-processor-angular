@@ -1,0 +1,76 @@
+.main-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #eee;
+}
+
+.card-reveal {
+    background-color: #d4824eab;
+}
+
+.logo {
+    margin-left: 10%;
+}
+
+.head-title {
+    color: White;
+    font-size: 2.1rem;
+    margin-left: 45%;
+}
+
+.collection {
+    margin: 1.5rem 0 1rem 0;
+    border: 1px solid #332d2d;
+    border-radius: 29px;
+}
+
+.logout-button {
+    background-color: #e07c1ae0 !important;
+    color: white;
+    float: right;
+    margin: 1%;
+}
+footer {
+    bottom: 0;
+    width: 100%;
+    background-color: #e07c1ae0 !important;
+}
+
+@media only screen and (min-width: 1000px) {
+    footer {
+        position: absolute;
+    }
+}
+
+nav {
+    background-color: #e07c1ae0 !important;
+}
+
+.home-content {
+    margin-top: 3%;
+}
+
+.info {
+    text-align: center;
+    margin-top: 3%;
+    font-style: italic;
+}
+
+.font-size-20 {
+    font-size: 20px;
+}
+
+.font-size-14 {
+    font-size: 14px;
+}
+
+.collection .collection-item {
+    padding: 10px 15px;
+}
+
+.collection-item:hover {
+    cursor: pointer;
+}

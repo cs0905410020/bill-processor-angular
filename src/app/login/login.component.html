@@ -1,0 +1,30 @@
+<div id="cf3">
+    <img class="bottom size-img" src="https://www.elementum.com/hubfs/V2_Inventory_App_Page/inventory_web.jpg?t=1527897798417  " />
+    <img class="top size-img" src="https://www.elementum.com/hubfs/V2_Inventory_App_Page/inventory_webdoodle.jpg?t=1527897798417" />
+</div>
+<ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-zig-zag"></ngx-spinner>
+<form [formGroup]="loginForm">
+
+    <mat-card class="login-card">
+        <mat-card-header>
+            <div mat-card-avatar class="header-image"></div>
+        </mat-card-header>
+        <mat-card-content>
+
+            <div class="login-container">
+                <mat-form-field>
+                    <input matInput formControlName="username" name="username" id="username" placeholder="Enter your username">
+                </mat-form-field>
+
+                <mat-form-field>
+                    <input matInput formControlName="password" name="password" id="password" placeholder="Enter your password" [type]="hide ? 'password' : 'text'">
+                    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                </mat-form-field>
+            </div>
+
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button color="accent" type="submit" (click)="onSubmit()">Login</button>
+        </mat-card-actions>
+    </mat-card>
+</form>

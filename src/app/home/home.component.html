@@ -1,0 +1,182 @@
+<mat-sidenav-container class="main-container">
+    <nav>
+        <div class="nav-wrapper">
+            <button mat-button class="logout-button" routerLink="/login"><mat-icon>face</mat-icon>Logout</button>
+            <button class="logout-button" mat-button [matMenuTriggerFor]="menu" *ngIf="isAdmin">Menu</button>
+            <mat-menu #menu="matMenu" yPosition="below" xPosition="after" [overlapTrigger]="false">
+            <button mat-menu-item  routerLink="/register">Register</button>
+            <button mat-menu-item  routerLink="/changePassword">Change Password</button>
+            <button mat-menu-item  routerLink="/uploadCfaContract">Upload Cfa Contract</button>
+            <button mat-menu-item  routerLink="/uploadFreightMaster">Upload Freight Master</button>
+            <button mat-menu-item  routerLink="/uploadDieselIndex">Upload Diesel Index</button>
+            <button mat-menu-item  routerLink="/uploadTripMaster">Upload Trip Master</button>
+            <button mat-menu-item  routerLink="/uploadLocationMaster">Upload Location Master</button>
+            <button mat-menu-item  routerLink="/uploadTransportBillWorkIdNumber">Upload Transport Bill Work Id</button>
+            <button mat-menu-item  routerLink="/uploadMaterialBillWorkIdNumber">Upload Material Bill Work Id</button>
+            <button mat-menu-item  routerLink="/uploadServiceBillWorkIdNumber">Upload Service Bill Work Id</button>
+            </mat-menu>
+            <!-- <a href="#" class="brand-logo logo center">Bill Processor</a> -->
+
+            <button mat-button class="mail-button" *ngIf="userId==='Purchase 2'" type="button" (click)="sendEmail('Open', 'ServiceBill')"><mat-icon>mail</mat-icon>Send Open Service Email</button>
+            <button mat-button class="mail-button" *ngIf="userId==='BPC 2'" type="button" (click)="sendEmail('Open', 'MaterialBill')"><mat-icon>mail</mat-icon>Send Open Material Email</button>
+            <button mat-button class="mail-button" *ngIf="userId==='CFA'" type="button" (click)="sendEmail('Open', 'TransportBill')"><mat-icon>mail</mat-icon>Send Open Transport Email</button>
+            <button mat-button class="mail-button" *ngIf="userId==='CFA'" type="button" (click)="sendEmail('Open', 'CfaBill')"><mat-icon>mail</mat-icon>Send Open CFA Email</button>
+            <button mat-button class="mail-button" type="button" *ngIf="userId==='Purchase 1' || userId==='Purchase 2'" (click)="sendEmail('Closed', 'ServiceBill')"><mat-icon>mail</mat-icon>Send Closed Email</button>
+            <button mat-button class="mail-button" type="button" *ngIf="userId==='BPC 1' || userId==='BPC 3' || userId==='BPC 2' || userId==='BPC 4'" (click)="sendEmail('Closed', 'MaterialBill')"><mat-icon>mail</mat-icon>Send Closed Email</button>
+            <button mat-button class="mail-button" type="button" *ngIf="userId==='Tanker' || userId==='Sec South' || userId==='Sec North' || userId==='Sec East' || userId==='Sec West' || userId==='Primary'" (click)="sendEmail('Closed', 'TransportBill')"><mat-icon>mail</mat-icon>Send Closed Email</button>
+            <button mat-button class="mail-button" type="button" *ngIf="userId==='CFA'" (click)="sendEmail('Closed', 'CfaBill')"><mat-icon>mail</mat-icon>Send Closed Email</button>
+            <button mat-button class="mail-button" type="button" *ngIf="userId==='Purchase 1' || userId==='Purchase 2'" (click)="sendEmail('Rejected', 'ServiceBill')"><mat-icon>mail</mat-icon>Send Rejected Email</button>
+            <button mat-button class="mail-button" type="button" *ngIf="userId==='BPC 1' || userId==='BPC 3' || userId==='BPC 2' || userId==='BPC 4'" (click)="sendEmail('Rejected', 'MaterialBill')"><mat-icon>mail</mat-icon>Send Rejected Email</button>
+            <button mat-button class="mail-button" type="button" *ngIf="userId==='Tanker' || userId==='Sec South' || userId==='Sec North' || userId==='Sec East' || userId==='Sec West' || userId==='Primary'" (click)="sendEmail('Rejected', 'TransportBill')"><mat-icon>mail</mat-icon>Send Rejected Email</button>
+            <button mat-button class="mail-button" type="button" *ngIf="userId==='CFA'" (click)="sendEmail('Rejected', 'CfaBill')"><mat-icon>mail</mat-icon>Send Rejected Email</button>
+            <button mat-button class="mail-button" type="button" (click)="downloadEmailData()"><mat-icon>mail</mat-icon>Download Mail Data</button>
+        </div>
+    </nav>
+    <ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-zig-zag"></ngx-spinner>
+    <mat-grid-list [cols]="5" gutterSize="5px" class="home-content">
+        <mat-grid-tile>
+            <div class="col s12">
+                <div class="card" style="overflow: visible;">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="assets/images/office.jpg">
+                    </div>
+                    <div class="card-content activator">
+                        <p class="info-color bold">CFA BILL REGISTER</p>
+                    </div>
+                    <div class=" card-reveal " style="display: none; transform: translateY(0px); ">
+                        <span class="card-title font-size-20 grey-text text-darken-4"><i class="material-icons right">close</i>Choose options</span>
+                        <div class="collection ">
+                            <a routerLink="/add-cfa-bill" class="collection-item ">Add CFA  <i class="material-icons right">send</i></a>
+                            <a routerLink="/view-edit-cfa-bill" class="collection-item ">View/Edit CFA <i class="material-icons right">send</i></a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile *ngIf="isAdmin">
+            <div class="col s12">
+                <div class="card" style="overflow: visible;">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="assets/images/office.jpg">
+                    </div>
+                    <div class="card-content activator">
+                        <p class="info-color bold">VENDOR MASTER</p>
+                    </div>
+                    <div class=" card-reveal " style="display: none; transform: translateY(0px); ">
+                        <span class="card-title font-size-20 grey-text text-darken-4"><i class="material-icons right">close</i>Choose options</span>
+                        <div class="collection ">
+                            <a routerLink="/addvendor" class="collection-item">Add Vendor <i class="material-icons right">send</i></a>
+                            <a class="collection-item " routerLink="/view-edit-vendor">View/Edit Vendor <i class="material-icons right">send</i></a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+            <div class="col s12">
+                <div class="card" style="overflow: visible;">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="assets/images/office.jpg">
+                    </div>
+                    <div class="card-content activator">
+                        <p class="info-color bold">TRANSPORT BILL REGISTER</p>
+                    </div>
+                    <div class=" card-reveal " style="display: none; transform: translateY(0px); ">
+                        <span class="card-title font-size-20 grey-text text-darken-4"><i class="material-icons right">close</i>Choose options</span>
+                        <div class="collection ">
+                            <a routerLink="/add-transport-bill" class="collection-item ">Add Bill <i class="material-icons right">send</i></a>
+                            <a class="collection-item" routerLink="/view-edit-transport-bill">View/Edit Bill <i class="material-icons right">send</i></a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+            <div class="col s12">
+                <div class="card" style="overflow: visible;">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="assets/images/office.jpg">
+                    </div>
+                    <div class="card-content activator">
+                        <p class="info-color bold">PURCHASE SERVICE</p>
+                    </div>
+                    <div class=" card-reveal " style="display: none; transform: translateY(0px); ">
+                        <span class="card-title font-size-20 grey-text text-darken-4"><i class="material-icons right">close</i>Choose options</span>
+                        <div class="collection ">
+                            <a routerLink="/add-purchase-service" class="collection-item ">Add Service <i class="material-icons right">send</i></a>
+                            <a class="collection-item" routerLink="/view-edit-purchase-service">View/Edit Service <i class="material-icons right">send</i></a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+            <div class="col s12">
+                <div class="card" style="overflow: visible;">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="assets/images/office.jpg">
+                    </div>
+                    <div class="card-content activator">
+                        <p class="info-color bold">PURCHASE MATERIAL</p>
+                    </div>
+                    <div class=" card-reveal " style="display: none; transform: translateY(0px); ">
+                        <span class="card-title font-size-20 grey-text text-darken-4"><i class="material-icons right">close</i>Choose options</span>
+                        <div class="collection ">
+                            <a routerLink="/add-purchase-material" class="collection-item">Add Material  <i class="material-icons right">send</i></a>
+                            <a routerLink="/view-edit-purchase-material" class="collection-item">View/Edit Material <i class="material-icons right">send</i></a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+    <div class="info info-color ">
+        Click on the required tab to perform specific operations.
+    </div>
+    <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col l3 s12 no-padding">
+                    <h5 class="white-text">Connect</h5>
+                    <p>
+                        <mat-icon>home</mat-icon>
+                        Address: Office No.-55&56,2nd Floor,
+                        <span class="padding-left-90">Asiatic Arcade, Vartak Nagar</span>
+                        <span class="padding-left-90">Thane W.-400606</span>
+                    </p>
+
+
+                </div>
+                <div class="col l3 s12 right">
+                    <h5 class="white-text">Follow Us On</h5>
+
+                    <img src="assets/images/fb.png" alt="facebook" width="30" height="30">
+                    <img src="assets/images/twitter.png" alt="twitter" width="30" height="30">
+
+                </div>
+                <div class="col l4 s12 right">
+                                            <mat-icon>phone</mat-icon>Phone: <span class="padding-left-10">9810645687</span>
+                    <p><mat-icon>mail</mat-icon>Email:     saurabh&#64;singhguptaassociates.in
+                        <span class="padding-left-70">casingh15&#64;gmail.com</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                Deveolped by <a class="white-text text-lighten-3" href="http://www.techbotz.in">&copy;Techbotz Pvt. Ltd.</a>
+            </div>
+        </div>
+    </footer>
+
+</mat-sidenav-container>

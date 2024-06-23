@@ -1,0 +1,346 @@
+<mat-sidenav-container class="main-container">
+    <nav>
+        <div class="nav-wrapper">
+
+            <span class="head-title center"> Bill Processor</span>
+            <button mat-button class="logout-button" routerLink="/login">
+                <mat-icon>face</mat-icon>Logout
+            </button>
+        </div>
+    </nav>
+    <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="large" color="#fff" type="ball-zig-zag"></ngx-spinner>
+    <form (ngSubmit)="onSubmit()" [formGroup]="addTransportBill">
+        <mat-card class="add-transport-bill-card">
+            <mat-card-header class="center info-color ">
+                <h4> ADD TRANSPORT BILL REGISTER</h4>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="add-transport-bill-container">
+                    <mat-grid-list [cols]="5" gutterSize="3px" rowHeight="60px">
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <mat-select placeholder="Select Bill Type" formControlName="billType" [(ngModel)]="selectedBillType">
+                                    <mat-option *ngFor="let billType of billTypes" [value]="billType.value">
+                                        {{ billType.value }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <mat-select placeholder="Select Process By" formControlName="processBy">
+                                    <mat-option *ngFor="let user of users" [value]="user">
+                                        {{ user }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <mat-select placeholder="CIL Service Category" formControlName="cilServiceCategory">
+                                    <mat-option *ngFor="let cilServiceCategory of cilServiceCategories"
+                                        [value]="cilServiceCategory.value">
+                                        {{ cilServiceCategory.value }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <mat-select placeholder="Region" formControlName="region">
+                                    <mat-option *ngFor="let region of regions" [value]="region.value">
+                                        {{ region.value }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field>
+                                <input matInput [(ngModel)]="onlineReceivingDt" [matDatepicker]="onlineBillReceivedDate"
+                                    formControlName="onlineBillReceivedDate"
+                                    placeholder="Choose Online Bill Received Date"
+                                    (click)="onlineBillReceivedDate.open()" (focus)="onlineBillReceivedDate.open()">
+                                <mat-datepicker-toggle matSuffix [for]="onlineBillReceivedDate"></mat-datepicker-toggle>
+                                <mat-datepicker #onlineBillReceivedDate >
+                                <!--<mat-datepicker #onlineBillReceivedDate (selectedChanged)="getDueDate($event)">-->
+                                </mat-datepicker>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field>
+                                <input matInput [(ngModel)]="billReceivedDt" [matDatepicker]="billReceivedDate"
+                                    formControlName="billReceivedDate" placeholder="Choose Bill Received Date"
+                                    (click)="billReceivedDate.open()" (focus)="billReceivedDate.open()">
+                                <mat-datepicker-toggle matSuffix [for]="billReceivedDate"></mat-datepicker-toggle>
+                                <mat-datepicker #billReceivedDate>
+                                <!--<mat-datepicker #billReceivedDate (selectedChanged)="getStatusDate($event)">-->
+                                </mat-datepicker>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field>
+                                <input matInput [(ngModel)]="dispatchDate" [matDatepicker]="dateOfDispatch"
+                                    formControlName="dateOfDispatch" placeholder="Choose Date Of Dispatch"
+                                    (click)="dateOfDispatch.open()" (focus)="dateOfDispatch.open()">
+                                <mat-datepicker-toggle matSuffix [for]="dateOfDispatch"></mat-datepicker-toggle>
+                                <mat-datepicker #dateOfDispatch>
+                                <!--<mat-datepicker #dateOfDispatch (selectedChanged)="getNumberOfDays($event)">-->
+                                </mat-datepicker>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <input matInput formControlName="statusAsOnDate" name="statusAsOnDate"
+                                    id="statusAsOnDate" placeholder="Enter Status As On Date" value="{{statusOnDate}}"
+                                    [readonly]="true">
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <input matInput #transporterCode formControlName="transporterCode"
+                                    (blur)="getVendorData(transporterCode.value)" name="transporterCode"
+                                    id="transporterCode" placeholder="Enter Transporter Code" minlength="8" maxlength="8">
+                            </mat-form-field>
+                            <div *ngIf="addTransportBill.get('transporterCode').invalid && (addTransportBill.get('transporterCode').dirty || addTransportBill.get('transporterCode').touched)" class="red-text">
+                                <div *ngIf="addTransportBill.get('transporterCode').errors">
+                                   Vendor Code must be 8 digits long.
+                                </div>
+                            </div>
+                        </mat-grid-tile>
+
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <input matInput formControlName="nameOfTheContractor" name="nameOfTheContractor"
+                                    id="nameOfTheContractor" placeholder="Enter Name of the Contractor"
+                                    value="{{dataset[0].vendorName}}" [readonly]="true">
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <input matInput formControlName="billNumber" name="billNumber" id="billNumber"
+                                    placeholder="Enter Bill Number">
+                            </mat-form-field>
+                            <div *ngIf="addTransportBill.get('billNumber').invalid && (addTransportBill.get('billNumber').dirty || addTransportBill.get('billNumber').touched)" class="red-text">
+                                <div *ngIf="addTransportBill.get('billNumber').errors">
+                                   Space is not allowed.
+                                </div>
+                            </div>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <input matInput formControlName="processDays" name="processDays" id="processDays"
+                                    placeholder="Enter Process Days" value="{{processedDays}}" [readonly]="true">
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <input matInput formControlName="receivedFrom" name="receivedFrom" id="receivedFrom"
+                                    placeholder="Enter Received From">
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width" *ngIf="months">
+                                <mat-select [(ngModel)]="billMonthString" [ngModelOptions]="{standalone: true}"
+                                    placeholder="Bill Month" (change)="setValidator()">
+                                    <mat-option *ngFor="let month of months" [value]="month">
+                                        {{ month }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width" *ngIf="years">
+                                <mat-select [(ngModel)]="billYear" [ngModelOptions]="{standalone: true}"
+                                    placeholder="Bill Year" (change)="setValidator()">
+                                    <mat-option *ngFor="let year of years" [value]="year">
+                                        {{ year }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <input matInput #billMonth formControlName="billMonth" name="billMonth" id="billMonth"
+                                    placeholder="Enter Bill Month(e.g. July-2018)" readonly>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <input matInput formControlName="remark" name="remark" id="remark"
+                                    placeholder="Enter Remark">
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field>
+                                <input matInput [matDatepicker]="billDate" formControlName="billDate"
+                                    placeholder="Choose Bill Date" (click)="billDate.open()" (focus)="billDate.open()">
+                                <mat-datepicker-toggle matSuffix [for]="billDate"></mat-datepicker-toggle>
+                                <mat-datepicker #billDate></mat-datepicker>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <input matInput formControlName="billAmount" name="billAmount" id="billAmount"
+                                    placeholder="Enter Bill Amount" [readonly]="true">
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <input matInput formControlName="docTrackNumber" name="docTrackNumber"
+                                    id="docTrackNumber" placeholder="Enter Doc. Track Number">
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <mat-select placeholder="Status" formControlName="status" (change)="updateValidator()">
+                                    <mat-option *ngFor="let status of statuses" [value]="status.value">
+                                        {{ status.value }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <mat-select placeholder="Type of Bill" formControlName="typeOfBill">
+                                    <mat-option *ngFor="let typeOfBill of typeOfBills" [value]="typeOfBill.value">
+                                        {{ typeOfBill.value }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <mat-select placeholder="Bill Closed As per Contract/Approval"
+                                    formControlName="billClosed">
+                                    <mat-option *ngFor="let billClosed of billsClosed" [value]="billClosed.value">
+                                        {{ billClosed.value }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-grid-tile>
+
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <input matInput formControlName="paymentTerms" name="paymentTerms" id="paymentTerms"
+                                    placeholder="Payment Terms" value="{{dataset[0].paymentTerms}}" [readonly]="true">
+                            </mat-form-field>
+                        </mat-grid-tile>
+
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <input matInput formControlName="dueDateForPayment" name="dueDateForPayment"
+                                    id="dueDateForPayment" placeholder="Enter Due Date for Payment"
+                                    value="{{dueDtForPayment | date:'dd/M/yyyy'}}" [readonly]="true">
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <mat-select placeholder="Vendor GST Number" formControlName="vendorGstNumber">
+                                    <mat-option *ngFor="let vendor of dataset" [value]="vendor.gstNumber">
+                                        {{ vendor.gstNumber }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <mat-select placeholder="Castrol GST Number" formControlName="castrolGstNumber">
+                                    <mat-option *ngFor="let vendor of dataset" [value]="vendor.castrolGSTN">
+                                        {{ vendor.castrolGSTN }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field>
+                                <input matInput [matDatepicker]="gmApprovalDate" formControlName="gmApprovalDate"
+                                    placeholder="Choose GM Approval Date" (click)="gmApprovalDate.open()"
+                                    (focus)="gmApprovalDate.open()">
+                                <mat-datepicker-toggle matSuffix [for]="gmApprovalDate"></mat-datepicker-toggle>
+                                <mat-datepicker #gmApprovalDate></mat-datepicker>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <input matInput formControlName="taxAreaCode" name="taxAreaCode" id="taxAreaCode"
+                                    placeholder="Enter Tax Area Code">
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <mat-select placeholder="Bill Category" formControlName="billCategory">
+                                    <mat-option *ngFor="let billCategory of billCategories"
+                                        [value]="billCategory.value">
+                                        {{ billCategory.value }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <mat-select placeholder="Category" formControlName="category">
+                                    <mat-option *ngFor="let category of categories" [value]="category.value">
+                                        {{ category.value }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-grid-tile>
+                    </mat-grid-list>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-raised-button color="accent" [disabled]="addTransportBill.invalid" type="submit">
+                    <mat-icon>add</mat-icon>
+                    Submit
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </form>
+    <app-transport-bill-register-excel></app-transport-bill-register-excel>
+    <div>
+        <button mat-raised-button class="home-button" routerLink="/home">
+            <mat-icon>home</mat-icon> Home
+        </button>
+    </div>
+
+
+
+    <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col l3 s12 no-padding">
+                    <h5 class="white-text">Connect</h5>
+                    <p>
+                        <mat-icon>home</mat-icon>
+                        Address: Office No.-55&56,2nd Floor,
+                        <span class="padding-left-90">Asiatic Arcade, Vartak Nagar</span>
+                        <span class="padding-left-90">Thane W.-400606</span>
+                    </p>
+
+
+                </div>
+                <div class="col l3 s12 right">
+                    <h5 class="white-text">Follow Us On</h5>
+
+                    <img src="assets/images/fb.png" alt="facebook" width="30" height="30">
+                    <img src="assets/images/twitter.png" alt="twitter" width="30" height="30">
+
+                </div>
+                <div class="col l4 s12 right">
+                    <mat-icon>phone</mat-icon>Phone: <span class="padding-left-10">9810645687</span>
+                    <p>
+                        <mat-icon>mail</mat-icon>Email: saurabh&#64;singhguptaassociates.in
+                        <span class="padding-left-70">casingh15&#64;gmail.com</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                Deveolped by <a class="white-text text-lighten-3" href="http://www.techbotz.in">&copy;Techbotz Pvt.
+                    Ltd.</a>
+            </div>
+        </div>
+    </footer>
+
+</mat-sidenav-container>

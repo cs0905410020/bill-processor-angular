@@ -1,0 +1,24 @@
+.home-button {
+    margin: 2% auto;
+    display: block;
+    background-color: #f49436;
+    color: white;
+}
+
+.submit {
+    margin: 2% auto;
+    display: block;
+    color: white;
+}
+
+.label-font {
+    font-size: 1em;
+}
+
+.cfa-bill-card {
+    text-align: center !important;
+    background-color: #f7e6e6c7;
+    width: 97%;
+    margin-left: 2%;
+    margin-top: 2%;
+}

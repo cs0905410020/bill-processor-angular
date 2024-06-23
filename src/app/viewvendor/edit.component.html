@@ -1,0 +1,99 @@
+<h5> Edit Vendor</h5>
+<ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-zig-zag"></ngx-spinner>
+<form [formGroup]="editVendor" *ngIf="dataset">
+    <mat-card class="">
+        <mat-card-content>
+            <mat-grid-list [cols]="3" gutterSize="5px" rowHeight="60px">
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Vendor Code" formControlName="vendorCode" [readonly]="true">
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Vendor Name" formControlName="vendorName" [readonly]="true">
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Vendor Address" formControlName="address">
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Vendor Email Id" formControlName="emailId">
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Vendor GST Number" formControlName="gstNumber">
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Vendor Location" formControlName="location" [readonly]="true">
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Vendor Type" formControlName="vendorType">
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Vendor Castrol GSTN" formControlName="castrolGSTN">
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Vendor Created At" value="{{dataset.createdAt | date:'dd/M/yyyy'}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Vendor Updated At" value="{{dataset.updatedAt | date:'dd/M/yyyy'}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Vendor Ceated By" value="{{dataset.createdBy}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Vendor Updated By" value="{{dataset.updatedBy}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field class="input-width">
+                        <mat-select placeholder="Payment Terms" formControlName="paymentTerms">
+                            <mat-option *ngFor="let paymentTerm of paymentTermsArr" [value]="paymentTerm.value">
+                                {{ paymentTerm.value }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </mat-grid-tile>
+                
+            </mat-grid-list>
+        </mat-card-content>
+        <div>
+            <button mat-raised-button color="accent" class="submit" (click)="submit()"> Submit</button>
+        </div>
+    </mat-card>
+</form>
+
+<div>
+    <button mat-raised-button class="home-button" routerLink="/view-edit-vendor"><mat-icon>keyboard_arrow_left</mat-icon> Back</button>
+</div>

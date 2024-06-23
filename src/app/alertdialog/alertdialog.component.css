@@ -1,0 +1,12 @@
+.ok-button {
+    margin: 2% auto;
+    display: block;
+    background-color: #f49436;
+    color: white;
+}
+
+.dialog_content {
+    font-size: 1em;
+    font-weight: bold;
+    font-style: italic;
+}

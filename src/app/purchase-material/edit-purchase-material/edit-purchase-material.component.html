@@ -1,0 +1,238 @@
+<h5> EDIT PURCHASE MATERIAL</h5>
+<ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-zig-zag"></ngx-spinner>
+<form [formGroup]="editPurchaseMaterial" *ngIf="dataset">
+    <mat-card class="">
+        <mat-card-content>
+            <mat-grid-list [cols]="3" gutterSize="5px" rowHeight="60px">
+                <mat-grid-tile>
+                        <mat-form-field class="input-width">
+                            <mat-select placeholder="Category" formControlName="category">
+                                <mat-option *ngFor="let category of categories" [value]="category.value">
+                                    {{ category.value }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput [(ngModel)]="billReceivedDt" [matDatepicker]="billReceivedDate" formControlName="billReceivedDate" placeholder="Choose Bill Received Date" (click)="billReceivedDate.open()">
+                        <mat-datepicker-toggle matSuffix [for]="billReceivedDate"></mat-datepicker-toggle>
+                        <mat-datepicker #billReceivedDate ></mat-datepicker>
+                       <!-- <mat-datepicker #billReceivedDate (selectedChanged)="getStatusDate($event)"></mat-datepicker>-->
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput [(ngModel)]="dispatchDate" [matDatepicker]="dateOfDispatch" formControlName="dateOfDispatch" placeholder="Choose Date of Dispatch" (click)="dateOfDispatch.open()" (focus)="dateOfDispatch.open()">
+                        <mat-datepicker-toggle matSuffix [for]="dateOfDispatch"></mat-datepicker-toggle>
+                        <mat-datepicker #dateOfDispatch ></mat-datepicker>
+                        <!--<mat-datepicker #dateOfDispatch (selectedChanged)="getNumberOfDays($event)"></mat-datepicker>-->
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field class="input-width">
+                        <input matInput formControlName="statusAsOnDate" name="statusAsOnDate" id="statusAsOnDate" placeholder="Enter Status As On Date" [readonly]="true">
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field class="input-width">
+                        <mat-select placeholder="Select Process By" formControlName="processedBy">
+                            <mat-option *ngFor="let user of users" [value]="user">
+                                {{ user }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                  </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field class="input-width">
+                        <input matInput #vendorCode formControlName="vendorCode" (blur)="getVendorData(vendorCode.value)" name="vendorCode"
+                        id="vendorCode" placeholder="Enter Vendor Code" minlength="8" maxlength="8" [readonly]="true">
+                    </mat-form-field>
+                    <div *ngIf="editPurchaseMaterial.get('vendorCode').invalid && (editPurchaseMaterial.get('vendorCode').dirty || editPurchaseMaterial.get('vendorCode').touched)" class="red-text">
+                        <div *ngIf="editPurchaseMaterial.get('vendorCode').errors">
+                           Vendor Code must be 8 digits long.
+                        </div>
+                    </div>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field class="input-width">
+                        <input matInput formControlName="vendorName" name="vendorName" id="vendorName" placeholder="Enter Vendor Name" [readonly]="true">
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field class="input-width">
+                        <mat-select placeholder="GST Number" formControlName="vendorGSTN">
+                            <mat-option *ngFor="let vendor of vendorData" [value]="vendor.gstNumber">
+                                {{ vendor.gstNumber }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field class="input-width">
+                        <mat-select placeholder="Castrol GST Number" formControlName="castrolGSTN">
+                            <mat-option *ngFor="let vendor of vendorData" [value]="vendor.castrolGSTN">
+                                {{ vendor.castrolGSTN }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field class="input-width">
+                        <input matInput formControlName="billNumber" name="billNumber" id="billNumber" placeholder="Enter Bill Number" [readonly]="true">
+                    </mat-form-field>
+                    <div *ngIf="editPurchaseMaterial.get('billNumber').invalid && (editPurchaseMaterial.get('billNumber').dirty || editPurchaseMaterial.get('billNumber').touched)" class="red-text">
+                        <div *ngIf="editPurchaseMaterial.get('billNumber').errors">
+                           Space is not allowed.
+                        </div>
+                    </div>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field class="input-width">
+                        <input matInput formControlName="processDays" name="processDays" id="processDays" placeholder="Enter Process Days" [readonly]="true">
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput [(ngModel)]="billDt" [matDatepicker]="billDate" formControlName="billDate" placeholder="Choose Bill Date" (click)="billDate.open()" (focus)="billDate.open()">
+                        <mat-datepicker-toggle matSuffix [for]="billDate"></mat-datepicker-toggle>
+                        <mat-datepicker #billDate ></mat-datepicker>
+                        <!--<mat-datepicker #billDate (selectedChanged)="setValidator($event)"></mat-datepicker>-->
+                    </mat-form-field>
+                </mat-grid-tile>
+
+
+                <mat-grid-tile>
+                    <mat-form-field class="input-width">
+                        <input matInput formControlName="billAmount" name="billAmount" id="billAmount" placeholder="Enter Bill Amount">
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field class="input-width">
+                        <input matInput formControlName="internalReferenceNumber" name="internalReferenceNumber" id="internalReferenceNumber" placeholder="Enter Internal Reference Number">
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field class="input-width">
+                        <mat-select placeholder="Status" formControlName="status" (change)="updateValidator()">
+                            <mat-option *ngFor="let status of statuses" [value]="status.value">
+                                {{ status.value }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field class="input-width">
+                        <mat-select #paymentTerm placeholder="Payment Terms" formControlName="paymentTerms" (change)="getDueDate(paymentTerm.value)">
+                            <mat-option *ngFor="let paymentTerm of paymentTermsArr" [value]="paymentTerm.value">
+                                {{ paymentTerm.value }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput [(ngModel)]="dueDtForPayment" [matDatepicker]="dueDateForPayment" formControlName="dueDateForPayment" placeholder="Choose Due Date for Payment" (click)="dueDateForPayment.open()" (focus)="dueDateForPayment.open()">
+                        <mat-datepicker-toggle matSuffix [for]="dueDateForPayment"></mat-datepicker-toggle>
+                        <mat-datepicker #dueDateForPayment></mat-datepicker>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field class="input-width">
+                        <input matInput formControlName="deliveryLocation" name="deliveryLocation" id="deliveryLocation" placeholder="Enter Delivery Location">
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field class="input-width">
+                        <input matInput formControlName="poNumber" name="poNumber" id="poNumber" placeholder="Enter PO Number">
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field class="input-width">
+                        <mat-select placeholder="PO Date Applicable" (change)="updatePoDateStatus($event)">
+                            <mat-option *ngFor="let poDateStatus of poDateStatuses" [value]="poDateStatus.value">
+                                {{ poDateStatus.value }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput [(ngModel)]="poDt" [matDatepicker]="poDate" placeholder="Choose PO Date" formControlName="poDate" (click)="poDate.open()" (focus)="poDate.open()" [disabled]="isPoDateApplicable">
+                        <mat-datepicker-toggle matSuffix [for]="poDate" [disabled]="isPoDateApplicable"></mat-datepicker-toggle>
+                        <mat-datepicker #poDate [disabled]="isPoDateApplicable"></mat-datepicker>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field class="input-width">
+                        <input matInput formControlName="ovNumber" name="ovNumber" id="ovNumber" placeholder="Enter OV Number">
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                 <mat-grid-tile>
+				  <mat-form-field class="input-width">
+					  <mat-select placeholder="Remarks" formControlName="remarks">
+						  <mat-option *ngFor="let remark of remarks" [value]="remark.value">
+							  {{ remark.value }}
+						  </mat-option>
+					  </mat-select>
+				  </mat-form-field>
+				</mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput [(ngModel)]="remarkMailDt" [matDatepicker]="remarkMailDate" placeholder="Choose Remark Mail Date" formControlName="remarkMailDate" (click)="remarkMailDate.open()" (focus)="remarkMailDate.open()">
+                        <mat-datepicker-toggle matSuffix [for]="remarkMailDate"></mat-datepicker-toggle>
+                        <mat-datepicker #remarkMailDate></mat-datepicker>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput [(ngModel)]="receiptDtOfScanning" [matDatepicker]="receiptDateOfScanning" placeholder="Choose Receipt Date Of Scanning" formControlName="receiptDateOfScanning" (click)="receiptDateOfScanning.open()" (focus)="receiptDateOfScanning.open()">
+                        <mat-datepicker-toggle matSuffix [for]="receiptDateOfScanning"></mat-datepicker-toggle>
+                        <mat-datepicker #receiptDateOfScanning></mat-datepicker>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field class="input-width">
+                        <input matInput formControlName="workidNumber" name="workidNumber" id="workidNumber" placeholder="Enter Work Id Number">
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field class="input-width">
+                        <input matInput formControlName="reason"  name="reason" id="reason" placeholder="Enter Reason">
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="gmApprovalDate" formControlName="gmApprovalDate" placeholder="Choose GM Approval Date" (click)="gmApprovalDate.open()" (focus)="gmApprovalDate.open()">
+                        <mat-datepicker-toggle matSuffix [for]="gmApprovalDate"></mat-datepicker-toggle>
+                        <mat-datepicker #gmApprovalDate></mat-datepicker>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </mat-card-content>
+        <div>
+            <button mat-raised-button color="accent" class="submit" (click)="submit()" [disabled]="editPurchaseMaterial.invalid"> Submit</button>
+        </div>
+    </mat-card>
+</form>
+<div>
+    <button mat-raised-button class="home-button" routerLink="/view-edit-purchase-material"><mat-icon>keyboard_arrow_left</mat-icon> Back</button>
+</div>

@@ -1,0 +1,36 @@
+.home-button{
+    margin: 2% auto;
+    display: block;
+    background-color: #f49436;
+    color: white;
+}
+.search-button {
+    background-color: #f49436;
+    color: white;
+}
+.filter-text {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.submit {
+    margin: 2% auto;
+    display: block;
+    color: white;
+}
+
+.label-font {
+    font-size: 1em;
+}
+
+.vendor-card {
+    text-align: center !important;
+    background-color: #f7e6e6c7;
+    width: 97%;
+    margin-left: 2%;
+    margin-top: 2%;
+}
+
+.closebtn:hover {
+    cursor: pointer;
+}

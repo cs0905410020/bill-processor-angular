@@ -1,0 +1,155 @@
+<h4> CFA Bill Register Details</h4>
+
+<mat-card class="" *ngIf="dataset">
+    <mat-card-content>
+        <mat-dialog-content>
+            <mat-grid-list [cols]="3" gutterSize="5px" rowHeight="60px">
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Serial Number" value="{{dataset.serialNumber}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Status As On Date" value="{{dataset.statusAsOnDate}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Process By" value="{{dataset.processBy}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Region" value="{{dataset.region}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Bill Received Date" value="{{dataset.billReceivedDate | date:'dd/M/yyyy'}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Date of Dispatch" value="{{dataset.dateOfDispatch | date:'dd/M/yyyy'}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Transporter Code" value="{{dataset.transporterCode}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Name of the Contractor" value="{{dataset.nameOfTheContractor}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Bill Number" value="{{dataset.billNumber}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Process Days" value="{{dataset.processDays}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Received From" value="{{dataset.receivedFrom}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Bill Month" value="{{dataset.billMonth}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Remark" value="{{dataset.remark}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Bill Date" value="{{dataset.billDate | date:'dd/M/yyyy'}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Bill Amount" value="{{dataset.billAmount}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Doc. Track Number" value="{{dataset.docTrackNumber}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Status" value="{{dataset.status}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Type of Bill" value="{{dataset.typeOfBill}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Bill Closed As per Contract/Approval" value="{{dataset.billClosed}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Payment Terms" value="{{dataset.paymentTerms}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Due Date for Payment" value="{{dataset.dueDateForPayment | date:'dd/M/yyyy'}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Vendor GSTN" value="{{dataset.vendorGstNumber}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Castrol GSTN" value="{{dataset.castrolGstNumber}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="GM Approval Date" value="{{dataset.gmApprovalDate | date:'dd/M/yyyy'}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Tax Area Code" value="{{dataset.taxAreaCode}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="OV Number" value="{{dataset.ovNumber}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </mat-dialog-content>
+    </mat-card-content>
+</mat-card>
+
+
+
+
+<div>
+    <button mat-raised-button class="home-button" routerLink="/view-edit-cfa-bill"><mat-icon>keyboard_arrow_left</mat-icon> Back</button>
+</div>

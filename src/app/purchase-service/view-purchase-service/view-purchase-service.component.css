@@ -1,0 +1,43 @@
+.home-button {
+    margin: 2% auto;
+    display: block;
+    background-color: #f49436;
+    color: white;
+}
+.search-button {
+    background-color: #f49436;
+    color: white;
+}
+.filter-text {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.submit {
+    margin: 2% auto;
+    display: block;
+    color: white;
+}
+.download-excel {
+    margin: 1% auto;
+    display: block;
+    background-color: #f49436;
+    color: white;
+}
+
+.label-font {
+    font-size: 1em;
+}
+
+.purchase-service-card {
+    text-align: center !important;
+    background-color: #f7e6e6c7;
+    width: 100%;
+    margin-top: 2%;
+}
+.example-radio-group {
+    margin-left: 5%;
+}
+.example-radio-button {
+    margin: 2%;
+}

@@ -1,0 +1,12 @@
+.cfa-bill-card {
+    text-align: center !important;
+    background-color: #f7e6e6c7;
+    width: 100%;
+    margin-top: 2%;
+}
+.home-button {
+    margin: 2% auto;
+    display: block;
+    background-color: #f49436;
+    color: white;
+}

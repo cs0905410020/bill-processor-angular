@@ -1,0 +1,12 @@
+.add-trip-button {
+    background-color: #e07c1ae0 !important;
+    color: white;
+    float: left;
+    margin: 1%;
+}
+.pull-right {
+    float: right;
+}
+.example-margin {
+    margin: 0 10px;
+}

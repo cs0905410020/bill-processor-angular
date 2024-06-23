@@ -1,0 +1,63 @@
+<div>
+    <button mat-raised-button class="home-button" routerLink="/home"><mat-icon>home</mat-icon> Home</button>
+</div>
+<div>
+    <button mat-raised-button class="download-excel" (click)="downloadPurchaseMaterialExcelFile()"><mat-icon>save_alt</mat-icon> Export Data</button>
+    <button mat-raised-button class="download-excel" (click)="downloadPurchaseMaterialExcelFileByDays()"><mat-icon>save_alt</mat-icon>Download Report By Days</button>
+</div>
+<div class="filter-text">
+    <input  #inputRef  (input)="onSearchChange(inputRef.value)" placeholder="Enter Text to Filter">
+    <input  #billNumberVal [(ngModel)]="billNumber" placeholder="Enter Bill Number">
+    <button mat-raised-button class="search-button" type="submit" (click)="onSearch(billNumberVal.value)">Search</button>
+</div>
+<ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-zig-zag"></ngx-spinner>
+<h4> Purchase Material View</h4>
+<form *ngFor="let purchaseMaterial of filteredPurchaseMaterialList | paginate : { itemsPerPage:numberOfElement, currentPage:page, id : '1', totalItems: totalItem } ">
+    <mat-card class="purchase-material-card">
+        <mat-card-content>
+            <mat-grid-list [cols]="7" gutterSize="1px" rowHeight="80px">
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Bill Number" value="{{purchaseMaterial.billNumber}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Bill Received Date" value="{{purchaseMaterial.billReceivedDate | date:'dd/M/yyyy'}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Status" value="{{purchaseMaterial.status}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <mat-form-field>
+                        <input matInput placeholder="Status As on Date" value="{{getStatusAsOnDate(purchaseMaterial.billReceivedDate)}}" disabled>
+                    </mat-form-field>
+                </mat-grid-tile>
+
+                <mat-grid-tile>
+                    <button mat-raised-button color="accent" type="submit" (click)="viewPurchaseMaterial(purchaseMaterial)">View</button>
+                </mat-grid-tile>
+
+                <mat-grid-tile *ngIf="'Closed'!==purchaseMaterial.status || ('Closed'===purchaseMaterial.status && isAdmin)">
+                    <button mat-raised-button color="accent" type="submit" (click)="editPurchaseMaterial(purchaseMaterial)">Edit</button>
+                </mat-grid-tile>
+                <mat-grid-tile *ngIf="isAdmin">
+                    <button mat-raised-button color="accent" type="submit" (click)="deletePurchaseMaterial(purchaseMaterial.serialNumber)">Delete</button>
+                </mat-grid-tile>
+            </mat-grid-list>
+        </mat-card-content>
+    </mat-card>
+</form>
+<div class="textcenter" *ngIf="isPagination">
+    <pagination-controls *ngIf="totalItem && numberOfElement" (pageChange)="page = getPurchaseMaterialData($event)" id="1" autohide="true" [maxSize]="0" [directionLinks]="true" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page"></pagination-controls>
+    <span *ngIf="totalItem && currentPage">You are on page {{currentPage}} of {{totalPages}}</span>
+</div>
+<div>
+    <button mat-raised-button class="home-button" routerLink="/home"><mat-icon>home</mat-icon> Home</button>
+</div>

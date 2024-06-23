@@ -1,0 +1,136 @@
+<mat-sidenav-container class="main-container">
+    <nav>
+        <div class="nav-wrapper">
+
+            <span class="head-title center"> Bill Processor</span>
+            <button mat-button class="logout-button" routerLink="/login"><mat-icon>face</mat-icon>Logout</button>
+        </div>
+    </nav>
+    <ngx-spinner bdColor = "rgba(51, 51, 51, 0.8)" size = "large" color = "#fff" type = "ball-zig-zag"></ngx-spinner>
+    <form (ngSubmit)="onSubmit()" [formGroup]="addVendor">
+        <mat-card class="addvendor-card">
+            <mat-card-header class="center info-color ">
+                <h4> ADD VENDOR</h4>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="addvendor-container">
+                    <mat-grid-list [cols]="5" gutterSize="5px" rowHeight="60px">
+                        <mat-grid-tile>
+                            <mat-form-field>
+                                <input matInput formControlName="vendorCode" name="vendorCode" id="vendorCode" placeholder="Enter Vendor Code">
+                            </mat-form-field>
+                        </mat-grid-tile>
+
+                        <mat-grid-tile>
+                            <mat-form-field>
+                                <input matInput formControlName="vendorName" name="vendorName" id="vendorName" placeholder="Enter Vendor Name">
+                            </mat-form-field>
+                        </mat-grid-tile>
+
+                        <mat-grid-tile>
+                            <mat-form-field>
+                                <input matInput formControlName="address" name="address" id="address" placeholder="Enter Vendor Address">
+                            </mat-form-field>
+                        </mat-grid-tile>
+
+                        <mat-grid-tile>
+
+                            <mat-form-field>
+                                <input matInput formControlName="location" name="location" id="location" placeholder="Enter Vendor location">
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <mat-select placeholder="Select Vendor Type" formControlName="vendorType">
+                                    <mat-option *ngFor="let vendorType of vendorTypes" [value]="vendorType.value">
+                                        {{ vendorType.value }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-grid-tile>
+
+                        <mat-grid-tile>
+
+                            <mat-form-field>
+                                <input matInput formControlName="emailId" name="emailId" id="emailId" placeholder="Enter Vendor Email Id">
+                            </mat-form-field>
+
+                        </mat-grid-tile>
+
+                        <mat-grid-tile>
+
+                            <mat-form-field>
+                                <input matInput formControlName="gstNumber" name="gstNumber" id="gstNumber" placeholder="Enter Vendor GST Number">
+                            </mat-form-field>
+                        </mat-grid-tile>
+                        <mat-grid-tile>
+
+                            <mat-form-field>
+                                <input matInput formControlName="castrolGSTN" name="castrolGSTN" id="castrolGSTN" placeholder="Enter Vendor Castrol GSTN">
+                            </mat-form-field>
+                        </mat-grid-tile>
+
+                        <mat-grid-tile>
+                            <mat-form-field class="input-width">
+                                <mat-select placeholder="Payment Terms" formControlName="paymentTerms">
+                                    <mat-option *ngFor="let paymentTerm of paymentTermsArr" [value]="paymentTerm.value">
+                                        {{ paymentTerm.value }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </mat-grid-tile>
+
+                        <mat-grid-tile>
+                            <mat-card-actions>
+                                <button mat-raised-button color="accent" type="submit"><mat-icon>add</mat-icon>
+                                  Add Vendor</button>
+                            </mat-card-actions>
+                        </mat-grid-tile>
+
+                    </mat-grid-list>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </form>
+    <div>
+        <app-vendor-excel-upload></app-vendor-excel-upload>
+        <button mat-raised-button class="home-button" routerLink="/home"><mat-icon>home</mat-icon> Home</button>
+    </div>
+
+    <footer class="page-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col l3 s12 no-padding">
+                    <h5 class="white-text">Connect</h5>
+                    <p>
+                        <mat-icon>home</mat-icon>
+                        Address: Office No.-55&56,2nd Floor,
+                        <span class="padding-left-90">Asiatic Arcade, Vartak Nagar</span>
+                        <span class="padding-left-90">Thane W.-400606</span>
+                    </p>
+
+
+                </div>
+                <div class="col l3 s12 right">
+                    <h5 class="white-text">Follow Us On</h5>
+
+                    <img src="assets/images/fb.png" alt="facebook" width="30" height="30">
+                    <img src="assets/images/twitter.png" alt="twitter" width="30" height="30">
+
+                </div>
+                <div class="col l4 s12 right">
+                                            <mat-icon>phone</mat-icon>Phone: <span class="padding-left-10">9810645687</span>
+                    <p><mat-icon>mail</mat-icon>Email:     saurabh&#64;singhguptaassociates.in
+                        <span class="padding-left-70"> casingh15&#64;gmail.com </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                Deveolped by <a class="white-text text-lighten-3" href="http://www.techbotz.in">&copy;Techbotz Pvt. Ltd.</a>
+            </div>
+        </div>
+    </footer>
+
+</mat-sidenav-container>

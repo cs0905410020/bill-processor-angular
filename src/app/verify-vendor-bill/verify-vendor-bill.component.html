@@ -1,0 +1,33 @@
+<app-vendor-bill-copy-excel></app-vendor-bill-copy-excel>
+<div  style="margin: 2em;">
+<mat-grid-list [cols]="5" gutterSize="3px" rowHeight="60px">
+  <mat-grid-tile>
+    <mat-form-field class="input-width">
+        <input matInput name="billNumber" [(ngModel)]="billNumber"
+            id="billNumber" placeholder="Enter Bill Number">
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field class="input-width">
+        <input matInput name="transporterCode" [(ngModel)]="vendorCode"
+            id="transporterCode" placeholder="Enter Transporter Code">
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field class="input-width">
+        <mat-select placeholder="Bill Category" [(ngModel)]="selectedBillCategory">
+            <mat-option *ngFor="let billCategory of billCategories" [value]="billCategory.value">
+                {{ billCategory.value }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</mat-grid-tile>
+</mat-grid-list>
+<button *ngIf="billNumber && vendorCode" mat-raised-button
+        color="accent" (click)="verifyBill()">
+        <mat-icon>add</mat-icon>
+        Verify Bill
+  </button>
+  <button mat-raised-button class="home-button" routerLink="/home"><mat-icon>home</mat-icon> Home</button>
+</div>
+

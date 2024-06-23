@@ -1,0 +1,349 @@
+<div mat-dialog-content>
+  <mat-card class="add-transport-bill-card">
+    <mat-card-content>
+      <form [formGroup]="transportBillVerificationForm" *ngIf="transportBillVerificationStatus">
+        <div class="add-transport-bill-container">
+          <mat-grid-list [cols]="4" gutterSize="2px" rowHeight="60px">
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput formControlName="billNumber" placeholder="Bill Number" [readonly]="true">
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput formControlName="vendorCode" placeholder="Vendor Code" [readonly]="true">
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput formControlName="billCategory" placeholder="Bill Category" [readonly]="true">
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field>
+                <input *ngIf="transportBillVerificationStatus.vendorNameStatus=='Verified'" matInput
+                  placeholder="Vendor Name Status" value="{{transportBillVerificationStatus.vendorNameStatus}}"
+                  [readonly]="true">
+                <mat-select *ngIf="transportBillVerificationStatus.vendorNameStatus !='Verified'"
+                  placeholder="Vendor Name Status" formControlName="vendorNameStatus">
+                  <mat-option *ngFor="let option of options" [value]="option">
+                    {{ option }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field>
+                <input *ngIf="transportBillVerificationStatus.dieselChargesStatus=='Verified'" matInput
+                  placeholder="Diesel Charge Status" value="{{transportBillVerificationStatus.dieselChargesStatus}}"
+                  [readonly]="true">
+                <mat-select *ngIf="transportBillVerificationStatus.dieselChargesStatus !='Verified'"
+                  placeholder="Diesel Charge Status" formControlName="dieselChargesStatus">
+                  <mat-option *ngFor="let option of options" [value]="option">
+                    {{ option }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field>
+                <input *ngIf="transportBillVerificationStatus.gstAmountStatus=='Verified'" matInput
+                  placeholder="GST Amount Status" value="{{transportBillVerificationStatus.gstAmountStatus}}" [readonly]="true">
+                <mat-select *ngIf="transportBillVerificationStatus.gstAmountStatus !='Verified'"
+                  placeholder="GST Amount Status" formControlName="gstAmountStatus">
+                  <mat-option *ngFor="let option of options" [value]="option">
+                    {{ option }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field>
+                <input *ngIf="transportBillVerificationStatus.grandTotalStatus=='Verified'" matInput
+                  placeholder="Grand Total Status" value="{{transportBillVerificationStatus.grandTotalStatus}}"
+                  [readonly]="true">
+                <mat-select *ngIf="transportBillVerificationStatus.grandTotalStatus !='Verified'"
+                  placeholder="Grand Total Status" formControlName="grandTotalStatus">
+                  <mat-option *ngFor="let option of options" [value]="option">
+                    {{ option }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field>
+                <input *ngIf="transportBillVerificationStatus.vehicleCapacityDifference=='Verified' || transportBillVerificationStatus.vehicleCapacityDifference =='Not Required'" matInput
+                  placeholder="Vehicle Capacity Status for Vendor Bill"
+                  value="{{transportBillVerificationStatus.vehicleCapacityDifference}}" [readonly]="true">
+                <mat-select *ngIf="transportBillVerificationStatus.vehicleCapacityDifference !='Verified' && transportBillVerificationStatus.vehicleCapacityDifference !='Not Required'"
+                  placeholder="Vehicle Capacity Status for Vendor Bill" formControlName="vehicleCapacityDifference">
+                  <mat-option *ngFor="let option of options" [value]="option">
+                    {{ option }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field>
+                <input matInput placeholder="Remarks for Vendor Bill" formControlName="remarks">
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+          <div formArrayName="tripVerificationStatuses">
+            <div
+              *ngFor="let trip of transportBillVerificationForm.get('tripVerificationStatuses').controls; let i = index;"
+              [formGroupName]="i">
+              <mat-grid-list [cols]="4" gutterSize="2px" rowHeight="60px">
+                <mat-grid-tile>
+                  <mat-form-field>
+                    <input matInput placeholder="Trip Number" formControlName="tripNumber" [readonly]="true">
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field>
+                    <input  *ngIf="trip.controls.higherLocationStatus.value != 'Required' && trip.controls.higherLocation.value" matInput placeholder="Higher Location Status"
+                     formControlName="higherLocation" [readonly]="true">
+                     <input  *ngIf="trip.controls.higherLocationStatus.value != 'Required' && !trip.controls.higherLocation.value" matInput placeholder="Higher Location Status"
+                     formControlName="higherLocationStatus" [readonly]="true">
+                    <input *ngIf="trip.controls.higherLocationStatus.value == 'Required'" matInput formControlName="higherLocation" name="higherLocation" id="higherLocation"
+                      placeholder="Enter Higher Location" required>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field>
+                    <input *ngIf="trip.controls.tripNumberStatus.value=='Verified'" matInput formControlName="tripOption"
+                      placeholder="Trip Correctness" [readonly]="true">
+                    <mat-select *ngIf="trip.controls.tripNumberStatus.value !='Verified'" formControlName="tripOption" [(ngModel)]="selectedTripOption" placeholder="Select Trip Number Correctnesss">
+                      <mat-option *ngFor="let option of tripOptions" [value]="option">
+                        {{ option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field>
+                    <input *ngIf="trip.controls.tripNumberStatus.value=='Verified'" matInput formControlName="tripType"
+                      placeholder="Trip Type" [readonly]="true">
+                    <mat-select *ngIf="trip.controls.tripNumberStatus.value !='Verified'"
+                    formControlName="tripType" placeholder="Select Trip Number Type" [disabled]="selectedTripOption != 'Correct'">
+                      <mat-option *ngFor="let option of tripTypes" [value]="option">
+                        {{ option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field>
+                    <input *ngIf="trip.controls.tripNumberStatus.value=='Verified'" matInput formControlName="tripNumberStatus"
+                      placeholder="Trip Number Status" [readonly]="true">
+                    <mat-select *ngIf="trip.controls.tripNumberStatus.value !='Verified'" placeholder="Select Trip Number Status"
+                      formControlName="tripNumberStatus" [disabled]="trip.controls.higherLocationStatus.value == 'Required'">
+                      <mat-option *ngFor="let option of options" [value]="option">
+                        {{ option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field>
+                    <input *ngIf="trip.controls.toLocationStatus.value=='Verified'" matInput placeholder="To Location Status"
+                      formControlName="toLocationStatus" [readonly]="true">
+                    <mat-select *ngIf="trip.controls.toLocationStatus.value !='Verified'" placeholder="Select To Location Status"
+                      formControlName="toLocationStatus" [disabled]="trip.controls.higherLocationStatus.value == 'Required'">
+                      <mat-option *ngFor="let option of options" [value]="option">
+                        {{ option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field>
+                    <input *ngIf="trip.controls.quantityStatus.value=='Verified'" matInput placeholder="Quantity Status"
+                    formControlName="quantityStatus" [readonly]="true">
+                    <mat-select *ngIf="trip.controls.quantityStatus.value !='Verified'" placeholder="Select Quantity Status"
+                      formControlName="quantityStatus" [disabled]="trip.controls.higherLocationStatus.value == 'Required'">
+                      <mat-option *ngFor="let option of options" [value]="option">
+                        {{ option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field>
+                    <input *ngIf="trip.controls.vehicleCapacityStatus.value=='Verified'" matInput
+                      placeholder="Vehicle Capacity Status for Trip" formControlName="vehicleCapacityStatus" [readonly]="true">
+                    <mat-select *ngIf="trip.controls.vehicleCapacityStatus.value !='Verified'"
+                      placeholder="Select Vehicle Capacity Status for Trip" formControlName="vehicleCapacityStatus" [disabled]="trip.controls.higherLocationStatus.value == 'Required'">
+                      <mat-option *ngFor="let option of options" [value]="option">
+                        {{ option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field>
+                    <input *ngIf="trip.controls.freightRateStatus.value=='Verified'" matInput placeholder="Freight Rate Status"
+                    formControlName="freightRateStatus" [readonly]="true">
+                    <mat-select *ngIf="trip.controls.freightRateStatus.value !='Verified' && trip.controls.freightRateDifference.value > 10 && !isAdmin" placeholder="Admin can approve or reject the bill"
+                      formControlName="freightRateStatus" [disabled]="trip.controls.higherLocationStatus.value == 'Required'">
+                      <mat-option [value]="options">
+                        Please ask Admin to approve or reject the bill
+                      </mat-option>
+                    </mat-select>
+                    <mat-select *ngIf="trip.controls.freightRateStatus.value !='Verified' && trip.controls.freightRateDifference.value > 10 && isAdmin" placeholder="Select Freight Rate Status"
+                      formControlName="freightRateStatus" [disabled]="trip.controls.higherLocationStatus.value == 'Required'">
+                      <mat-option *ngFor="let option of options" [value]="option">
+                        {{ option }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-select *ngIf="trip.controls.freightRateStatus.value !='Verified' && trip.controls.freightRateDifference.value < 10 && isAdmin" placeholder="Select Freight Rate Status"
+                        formControlName="freightRateStatus" [disabled]="trip.controls.higherLocationStatus.value == 'Required'">
+                        <mat-option *ngFor="let option of options" [value]="option">
+                          {{ option }}
+                        </mat-option>
+                      </mat-select>
+                    <mat-select *ngIf="trip.controls.freightRateStatus.value !='Verified' && trip.controls.freightRateDifference.value < 10 && !isAdmin" placeholder="Select Freight Rate Status"
+                        formControlName="freightRateStatus" [disabled]="trip.controls.higherLocationStatus.value == 'Required'">
+                        <mat-option *ngFor="let option of options" [value]="option">
+                          {{ option }}
+                        </mat-option>
+                      </mat-select>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field>
+                    <input *ngIf="trip.controls.lrDateStatus.value=='Verified'" matInput placeholder="LR Date Status"
+                    formControlName="lrDateStatus" [readonly]="true">
+                    <mat-select *ngIf="trip.controls.lrDateStatus.value !='Verified'" placeholder="Select LR Date Status"
+                      formControlName="lrDateStatus" [disabled]="trip.controls.higherLocationStatus.value == 'Required'">
+                      <mat-option *ngFor="let option of options" [value]="option">
+                        {{ option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field>
+                    <input *ngIf="trip.controls.tollChargesStatus.value=='Verified'" matInput placeholder="Toll Charges Status"
+                    formControlName="tollChargesStatus" [readonly]="true">
+                    <mat-select *ngIf="trip.controls.tollChargesStatus.value !='Verified'" placeholder="Select Toll Charges Status"
+                      formControlName="tollChargesStatus" [disabled]="trip.controls.higherLocationStatus.value == 'Required'">
+                      <mat-option *ngFor="let option of options" [value]="option">
+                        {{ option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field>
+                    <input *ngIf="trip.controls.loadingUnloadingChargesStatus.value=='Verified'" matInput
+                      placeholder="Loading Unloading Charges Status" formControlName="loadingUnloadingChargesStatus"
+                      [readonly]="true">
+                    <mat-select *ngIf="trip.controls.loadingUnloadingChargesStatus.value !='Verified'"
+                      placeholder="Select Loading Unloading Charges Status"
+                      formControlName="loadingUnloadingChargesStatus" [disabled]="trip.controls.higherLocationStatus.value == 'Required'">
+                      <mat-option *ngFor="let option of options" [value]="option">
+                        {{ option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field>
+                    <input *ngIf="trip.controls.twoPointChargesStatus.value=='Verified'" matInput
+                      placeholder="Two Point Charges Status" formControlName="twoPointChargesStatus" [readonly]="true">
+                    <mat-select *ngIf="trip.controls.twoPointChargesStatus.value !='Verified'"
+                      placeholder="Select Two Point Charges Status" formControlName="twoPointChargesStatus" [disabled]="trip.controls.higherLocationStatus.value == 'Required'">
+                      <mat-option *ngFor="let option of options" [value]="option">
+                        {{ option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field>
+                    <input *ngIf="trip.controls.detentionAmountStatus.value=='Verified'" matInput placeholder="Detention Amount Status"
+                    formControlName="detentionAmountStatus" [readonly]="true">
+                    <mat-select *ngIf="trip.controls.detentionAmountStatus.value !='Verified'"
+                      placeholder="Select Detention Amount Status" formControlName="detentionAmountStatus" [disabled]="trip.controls.higherLocationStatus.value == 'Required'">
+                      <mat-option *ngFor="let option of options" [value]="option">
+                        {{ option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field>
+                    <input *ngIf="trip.controls.odaChargesStatus.value=='Verified'" matInput placeholder="ODA Charges Status"
+                    formControlName="odaChargesStatus" [readonly]="true">
+                    <mat-select *ngIf="trip.controls.odaChargesStatus.value !='Verified'" placeholder="Select ODA Charges Status"
+                      formControlName="odaChargesStatus" [disabled]="trip.controls.higherLocationStatus.value == 'Required'">
+                      <mat-option *ngFor="let option of options" [value]="option">
+                        {{ option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field>
+                    <input *ngIf="trip.controls.ddChargesStatus.value=='Verified'" matInput placeholder="DD Charges Status"
+                    formControlName="ddChargesStatus" [readonly]="true">
+                    <mat-select *ngIf="trip.controls.ddChargesStatus.value !='Verified'" placeholder="Select DD Charges Status"
+                      formControlName="ddChargesStatus" [disabled]="trip.controls.higherLocationStatus.value == 'Required'">
+                      <mat-option *ngFor="let option of options" [value]="option">
+                        {{ option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field>
+                    <input *ngIf="trip.controls.otherChargesStatus.value=='Verified'" matInput placeholder="Other Charges Status"
+                    formControlName="otherChargesStatus" [readonly]="true">
+                    <mat-select *ngIf="trip.controls.otherChargesStatus.value !='Verified'" placeholder="Select Other Charges Status"
+                      formControlName="otherChargesStatus" [disabled]="trip.controls.higherLocationStatus.value == 'Required'">
+                      <mat-option *ngFor="let option of options" [value]="option">
+                        {{ option }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field>
+                    <input matInput placeholder="Trip Remarks" formControlName="remarks">
+                  </mat-form-field>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field>
+                    <input matInput placeholder="Reporting Date and Time" formControlName="reportingDateAndTime">
+                  </mat-form-field>
+                  <div *ngIf="trip.controls.reportingDateAndTime.invalid && (trip.controls.reportingDateAndTime.dirty || trip.controls.reportingDateAndTime.touched)" class="red-text">
+                    <div *ngIf="trip.controls.reportingDateAndTime.errors">
+                      E.g 08/05/2020 10:00:00 am.
+                    </div>
+                  </div>
+                </mat-grid-tile>
+                <mat-grid-tile>
+                  <mat-form-field>
+                    <input matInput placeholder="Unloading Date and Time" formControlName="unloadingDateAndTime">
+                  </mat-form-field>
+
+                  <div *ngIf="trip.controls.unloadingDateAndTime.invalid && (trip.controls.unloadingDateAndTime.dirty || trip.controls.unloadingDateAndTime.touched)" class="red-text">
+                    <div *ngIf="trip.controls.unloadingDateAndTime.errors">
+                      E.g 08/05/2020 10:00:00 am.
+                    </div>
+                  </div>
+                </mat-grid-tile>
+              </mat-grid-list>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div mat-dialog-actions class="pull-right">
+  <button mat-button *ngIf="!transportBillVerificationStatus.reverified" [disabled]="transportBillVerificationForm.invalid" cdkFocusInitial (click)="reverify(transportBillVerificationForm)">Re Verify Bill</button>
+  <button mat-button  [mat-dialog-close]="transportBillVerificationForm" cdkFocusInitial (click)="onSubmit()">Submit</button>
+  <button mat-button (click)="cancel()">Cancel</button>
+</div>
