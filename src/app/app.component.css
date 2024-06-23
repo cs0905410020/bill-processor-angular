@@ -1,0 +1,22 @@
+.card-head {
+    background-color: black;
+    padding: 65px;
+}
+
+.mb-5 {
+    margin: 1%;
+}
+
+footer {
+    bottom: 0;
+    width: 100%;
+    background-color: #e07c1ae0 !important;
+    padding-top: 0px;
+}
+
+nav {
+    background-color: #e07c1ae0 !important;
+}
+.container {
+    width: 100%!important;
+}
