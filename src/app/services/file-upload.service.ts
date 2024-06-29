@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AlertdialogComponent } from '../alertdialog/alertdialog.component';
 import { DecodeTokenService } from './decode-token.service';
 import { NgxSpinnerService } from 'ngx-spinner';
-import {map} from "rxjs";
+import {map, Observable} from "rxjs";
 
 @Injectable()
 export class FileUploadService {
@@ -132,7 +132,7 @@ uploadPurchaseMaterialFile(file: File) {
   });
 }
 
-uploadOcrDocument(file: File) {
+uploadOcrDocument(file: File): Observable<any> {
   console.log(file);
   const formData = new FormData();
   formData.append('ocrDocument', file, file.name);
