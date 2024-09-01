@@ -223,16 +223,18 @@ export class EditPurchaseMaterialComponent {
         this.getVendorData(this.editPurchaseMaterial.get('vendorCode')?.value);
   }
   openDialog(dataValue: string, flag: boolean): void {
-    const dialogRef = this.dialog.open(AlertdialogComponent, {
-      width: '380px',
-      data: dataValue
-    });
+    if(dataValue) {
+      const dialogRef = this.dialog.open(AlertdialogComponent, {
+        width: '380px',
+        data: dataValue
+      });
 
-    dialogRef.afterClosed().subscribe((result:any) => {
-      if (flag) {
-        this.router.navigate(['/add-purchase-material']);
-      }
-    });
+      dialogRef.afterClosed().subscribe((result: any) => {
+        if (flag) {
+          this.router.navigate(['/add-purchase-material']);
+        }
+      });
+    }
   }
   getVendorData(vendorCode: string) {
     this._data.getVendorData(vendorCode, 'NA').subscribe((res:any) => {

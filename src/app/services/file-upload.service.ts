@@ -32,6 +32,7 @@ uploadVendorFile(file: File) {
   formData.append('vendorExcel', file, file.name);
   this._http.post(`${this.importUrl}vendor/importBulkVendors`, formData, { headers: this.setAuthenticationHeader() })
   .subscribe((res:any) => {
+    console.log(res,'res')
     if (res.status === 201) {
       this.loaderService.hide();
       this.openDialog('Successfully Added');
@@ -278,6 +279,7 @@ uploadMaterialBillWorkIdFile(file: File) {
   formData.append('materialBillWorkId', file, file.name);
   this._http.post(`${this.importUrl}purchasematerial/importWorkIdNumber`, formData, { headers: this.setAuthenticationHeader() })
   .subscribe((res:any)=> {
+    console.log(res,'res')
     if (res.status === 200) {
       this.loaderService.hide();
       this.openDialog('Work Id Number updated successfully. Please check the bill details.');

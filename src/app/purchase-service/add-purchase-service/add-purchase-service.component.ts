@@ -19,7 +19,7 @@ export class AddPurchaseServiceComponent implements OnInit {
   //addpurchase: FormGroup | null = null;
   billReceivedDt: Date =new Date();
   dispatchDate: Date =new Date();
-  dueDtForPayment: Date|null =new Date();
+  dueDtForPayment: Date|null =null;
   paymentTerm: number = 1;
   processedDays: number =1;
   error: string='';
@@ -63,7 +63,8 @@ export class AddPurchaseServiceComponent implements OnInit {
     this.createForm();
     this.dataset = [{
     }];
-    const users = localStorage.getItem('purchaseSerUsers');
+    const users = localStorage.getItem('purchaseSerUsers')
+    console.log(users,'users')
     if (users) {
       this.users = users.split(',');
       console.log(this.users);
@@ -238,16 +239,18 @@ export class AddPurchaseServiceComponent implements OnInit {
   }
    // open dialog
 openDialog(dataValue: string, flag: boolean): void {
-  const dialogRef = this.dialog.open(AlertdialogComponent, {
-    width: '380px',
-    data: dataValue
-  });
+  if(dataValue){
+    const dialogRef = this.dialog.open(AlertdialogComponent, {
+      width: '380px',
+      data: dataValue
+    });
+    dialogRef.afterClosed().subscribe((result:any) => {
+      if (flag) {
+        this.router.navigate(['/add-purchase-service']);
+      }
+    });
+  }
 
-  dialogRef.afterClosed().subscribe((result:any) => {
-    if (flag) {
-      this.router.navigate(['/add-purchase-service']);
-    }
-  });
 }
 validateInput(field: any, numberOfDigits: number) {
  let inputValue = field.target.value;

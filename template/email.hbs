@@ -1,0 +1,54 @@
+<script id="entry-template" type="text/x-handlebars-template">
+<html>
+<head>
+<link rel="stylesheet" href="/style.css">
+</head>
+<script>
+Handlebars.registerHelper('formatDate', function(inputDate) {
+  if(inputDate) {
+  	let dateStr = inputDate.split("-");
+    return dateStr[2].substring(0,2)+"/"+dateStr[1]+"/"+dateStr[0];
+  } else {
+  	return 'NA';
+  }
+});
+Handlebars.registerHelper('isApplicable', function(remark) {
+  	return remark ? remark: 'NA';
+});
+</script>
+<body style="font:15px arial,sans-serif;">
+<span style="margin: 10px;">Dear Sir/Madam,</span><br>
+<span style="margin: 10px;">Please find below bill details :- </span>
+<table style="margin: 30px;border-collapse: collapse;border: 1px solid black; white-space: nowrap; font:15px arial,sans-serif;">
+    <thead> 
+        <th style="border: 1px solid black; padding: 5px;">Bill Number</th> 
+        <th style="border: 1px solid black; padding: 5px;">Bill Received Date</th>
+        <th style="border: 1px solid black; padding: 5px;">Vendor Name</th>
+		<th style="border: 1px solid black; padding: 5px;">Bill Date</th> 
+        <th style="border: 1px solid black; padding: 5px;">Bill Amount</th> 
+		<th style="border: 1px solid black; padding: 5px;">Bill Status </th>
+		<th style="border: 1px solid black; padding: 5px;">Due Date for Payment</th>
+		<th style="border: 1px solid black; padding: 5px;">Remarks</th>
+        <th style="border: 1px solid black; padding: 5px;">Status As on Date</th>
+    </thead> 
+    <tbody> 
+        {{#emails}} 
+        <tr> 
+            <td style="border: 1px solid black; padding: 5px;">{{billNumber}}</td> 
+            <td style="border: 1px solid black; padding: 5px;">{{formatDate billReceivedDate}}</td>
+            <td style="border: 1px solid black; padding: 5px;">{{vendorName}}</td>
+			<td style="border: 1px solid black; padding: 5px;">{{formatDate billDate}}</td>
+            <td style="border: 1px solid black; padding: 5px;">{{billAmount}}</td>
+            <td style="border: 1px solid black; padding: 5px;">{{status}}</td>
+            <td style="border: 1px solid black; padding: 5px;">{{formatDate dueDateForPayment}}</td>
+            <td style="border: 1px solid black; padding: 5px;">{{isApplicable remark}}</td>
+            <td style="border: 1px solid black; padding: 5px;">{{statusAsOnDate}}</td>
+        </tr> 
+        {{/emails}} 
+    </tbody> 
+</table>
+<span style="margin: 10px;">Thanks & Regards,</span><br>
+<span style="margin: 10px;">BPC Team</span>
+</body>
+</html>
+</script>

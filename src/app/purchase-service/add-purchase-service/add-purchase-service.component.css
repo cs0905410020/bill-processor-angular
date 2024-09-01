@@ -61,3 +61,8 @@ nav {
 .input-width {
     width: 201px !important;
 }
+input#vendorCode.ng-invalid::placeholder,
+input#vendorName.ng-invalid::placeholder{
+  color: red;
+  opacity: 2;
+}

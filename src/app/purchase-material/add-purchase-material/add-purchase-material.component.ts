@@ -268,16 +268,18 @@ updateValidator () {
 }
    // open dialog
 openDialog(dataValue: string, flag: boolean): void {
-  const dialogRef = this.dialog.open(AlertdialogComponent, {
-    width: '380px',
-    data: dataValue
-  });
+  if(dataValue) {
+    const dialogRef = this.dialog.open(AlertdialogComponent, {
+      width: '380px',
+      data: dataValue
+    });
 
-  dialogRef.afterClosed().subscribe((result:any) => {
-    if (flag) {
-      this.router.navigate(['/add-purchase-material']);
-    }
-  });
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if (flag) {
+        this.router.navigate(['/add-purchase-material']);
+      }
+    });
+  }
 }
 updatePoDateStatus(poDateApplicable: any) {
   this.isPoDateApplicable = false;

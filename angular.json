@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "untitled2": {
+    "bill-processor": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,12 +13,18 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/untitled2",
+            "outputPath": "dist/bill-processor",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
+            "allowedCommonJsDependencies": [
+              "file-saver",
+              "hammerjs"
+            ],
+
+
             "tsConfig": "tsconfig.app.json",
             "assets": [
               {
@@ -36,13 +42,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "3MB",
+                  "maximumError": "5MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kB",
-                  "maximumError": "4kB"
+                  "maximumWarning": "3MB",
+                  "maximumError": "4MB"
                 }
               ],
               "outputHashing": "all"
@@ -59,10 +65,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "untitled2:build:production"
+              "buildTarget": "bill-processor:build:production"
             },
             "development": {
-              "buildTarget": "untitled2:build:development"
+              "buildTarget": "bill-processor:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -78,14 +84,10 @@
               "zone.js/testing"
             ],
             "tsConfig": "tsconfig.spec.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
-            ],
+            "assets": ["src/assets"],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/style.css"
             ],
             "scripts": []
           }

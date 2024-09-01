@@ -124,14 +124,14 @@ export class EditPurchaseServiceComponent {
           igst: [this.dataset.igst],
           cgst: [this.dataset.cgst],
           sgst: [this.dataset.sgst],
-          mbl: [this.dataset.sgst],
-          hbl: [this.dataset.sgst],
+          mbl: [this.dataset.mbl],
+          hbl: [this.dataset.hbl],
           blNumber: [this.dataset.blNumber],
           blDate: [this.dataset.blDate],
           chargeDetail: [this.dataset.chargeDetail]
         });
         const statusStr = this.editPurchaseService?.get('status')?.value;
-		const remarkStr = this.editPurchaseService?.get('remarks')?.value;
+		    const remarkStr = this.editPurchaseService?.get('remarks')?.value;
         const typeOfBillStr = this.editPurchaseService?.get('typeOfBills')?.value;
         const chargeDetailStr = this.editPurchaseService?.get('chargeDetail')?.value;
         const processByStr = this.editPurchaseService?.get('processedBy')?.value;
