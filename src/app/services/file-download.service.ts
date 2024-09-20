@@ -5,7 +5,7 @@ import {map, Observable} from "rxjs";
 
 @Injectable()
 export class FileDownloadService {
-  exportUrl = 'http://localhost:8081/api/desktopapp/';
+  exportUrl = 'http://159.89.162.152:8081/api/desktopapp/';
   error: string='';
   setAuthenticationHeader () {
     const headers = new HttpHeaders({

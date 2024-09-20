@@ -9,7 +9,7 @@ import {map, Observable} from "rxjs";
 
 @Injectable()
 export class FileUploadService {
-  importUrl = 'http://localhost:8081/api/desktopapp/';
+  importUrl = 'http://159.89.162.152:8081/api/desktopapp/';
   ocrUrl = 'http://localhost:8085/getOcrData'
   error: string='';
   private headers2 = new HttpHeaders({
@@ -137,8 +137,7 @@ uploadOcrDocument(file: File): Observable<any> {
   console.log(file);
   const formData = new FormData();
   formData.append('ocrDocument', file, file.name);
-  return this._http.post(`${this.ocrUrl}`, formData, { headers: this.setAuthenticationHeader() }).pipe(
-  map((res: any) => res.json()));
+  return this._http.post(`${this.ocrUrl}`, formData, { headers: this.setAuthenticationHeader() });
 }
 sendScannedBill(file: File, serialNumber : any) {
   const formData = new FormData();

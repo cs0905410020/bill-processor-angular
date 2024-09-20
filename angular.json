@@ -14,6 +14,7 @@
           "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist/bill-processor",
+            "baseHref": "./",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -27,15 +28,22 @@
 
             "tsConfig": "tsconfig.app.json",
             "assets": [
+              "src/assets",
               {
                 "glob": "**/*",
                 "input": "public"
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/css/style.css",
+              "src/assets/css/materialize.css",
+              "src/assets/css/fonts.googleapis.com.css"
+
             ],
-            "scripts": []
+            "scripts": [
+
+            ]
           },
           "configurations": {
             "production": {
@@ -87,9 +95,13 @@
             "assets": ["src/assets"],
             "styles": [
               "src/styles.css",
-              "src/assets/style.css"
+              "src/assets/css/style.css",
+              "src/assets/css/materialize.css",
+              "src/assets/css/fonts.googleapis.com.css"
             ],
-            "scripts": []
+            "scripts": [
+
+            ]
           }
         }
       }

@@ -6,13 +6,13 @@ import {map} from "rxjs";
 @Injectable()
 export class AllservicesService {
 // url constants
-vendorUrl = 'http://localhost:8081/api/desktopapp/vendor/';
+vendorUrl = 'http://159.89.162.152:8081/api/desktopapp/vendor/';
 loginurl = 'http://159.89.162.152:8081/api/user/';
-purchaseServiceUrl = 'http://localhost:8081/api/desktopapp/purchasedetails/';
-transportBillUrl = 'http://localhost:8081/api/desktopapp/transportbill/';
-cfaBillUrl = 'http://localhost:8081/api/desktopapp/cfabill/';
+purchaseServiceUrl = 'http://159.89.162.152:8081/api/desktopapp/purchasedetails/';
+transportBillUrl = 'http://159.89.162.152:8081/api/desktopapp/transportbill/';
+cfaBillUrl = 'http://159.89.162.152:8081/api/desktopapp/cfabill/';
 purchaseMaterialUrl = 'http://159.89.162.152:8081/api/desktopapp/purchasematerial/';
-emailDataUrl = 'http://localhost:8081/api/desktopapp/email/';
+emailDataUrl = 'http://159.89.162.152:8081/api/desktopapp/email/';
 emailUrl = 'http://localhost:4300/sendMail';
 private headers2 = new HttpHeaders({
   'Content-Type': 'application/json',
@@ -108,7 +108,6 @@ getPurchaseServiceByBillNumber(billNumber: any):Observable<any> {
   billNumber = billNumber.replace(/\\/g, "%5C");
   return this._http.get(`${this.purchaseServiceUrl}byBillNumber?billNumber=${billNumber}`,
   { headers: this.setAuthenticationHeader() });
-   /* .pipe(map((res: any) => res.json()));*/
 }
 addTransportBill(data: any, dueDtForPayment: any):Observable<any> {
   data.dueDateForPayment = dueDtForPayment;
@@ -116,118 +115,106 @@ addTransportBill(data: any, dueDtForPayment: any):Observable<any> {
   return this._http.post(this.transportBillUrl, data, { headers: this.setAuthenticationHeader() });
 }
 getTransportBillList(page : any):Observable<any> {
-  return this._http.get(this.transportBillUrl + 'listTransportBills?' + 'page=' + (page - 1),  { headers: this.setAuthenticationHeader() })
-    .pipe(map((res: any) => res.json()));
+  return this._http.get(this.transportBillUrl + 'listTransportBills?' + 'page=' + (page - 1),  { headers: this.setAuthenticationHeader() });
 }
 getTransportBillDetailsByBillNumber(billNumber : any):Observable<any> {
   billNumber = billNumber.replace(/\\/g, "%5C");
   return this._http.get(`${this.transportBillUrl}byBillNumber?billNumber=${billNumber}`,
-  { headers: this.setAuthenticationHeader() })
-    .pipe(map((res: any) => res.json()));
+  { headers: this.setAuthenticationHeader() });
 }
 getTransportBillDetails(billNumber : any, vendorCode : any):Observable<any> {
   return this._http.get(`${this.transportBillUrl}findTransportBills?billNumber=${billNumber}&vendorCode=${vendorCode}`,
-  { headers: this.setAuthenticationHeader() })
-    .pipe(map((res: any) => res.json()));
+  { headers: this.setAuthenticationHeader() });
 }
 getPurchaseServiceList(page : any):Observable<any> {
   return this._http.get(this.purchaseServiceUrl + 'listPurchaseServices?' + 'page=' + (page - 1),
-  { headers: this.setAuthenticationHeader() })
-    .pipe(map((res: any) => res.json()));
+  { headers: this.setAuthenticationHeader() });
 }
 getPurchaseServiceDetails(billNumber : any, vendorCode : any):Observable<any> {
   return this._http.get(`${this.purchaseServiceUrl}findPurchaseServices?billNumber=${billNumber}&vendorCode=${vendorCode}`,
-    { headers: this.setAuthenticationHeader() })
-    .pipe(map((res: any) => res.json()));
+    { headers: this.setAuthenticationHeader() });
 }
 addCfaBill(data : any, dueDtForPayment : any):Observable<any> {
   data.dueDateForPayment = dueDtForPayment;
   console.log(JSON.stringify(data));
-  return this._http.post(this.cfaBillUrl, data, { headers: this.setAuthenticationHeader() }).pipe(map((res: any) => res.json()));
+  return this._http.post(this.cfaBillUrl, data, { headers: this.setAuthenticationHeader() });
 }
 getCfaBillList(page : any):Observable<any> {
-  return this._http.get(this.cfaBillUrl  + 'listCfaBills?' + 'page=' + (page - 1),  { headers: this.setAuthenticationHeader() })
-    .pipe(map((res: any) => res.json()));
+  return this._http.get(this.cfaBillUrl  + 'listCfaBills?' + 'page=' + (page - 1),  { headers: this.setAuthenticationHeader() });
 }
 getCfaBillDetailsByBillNumber(billNumber : any):Observable<any> {
   billNumber = billNumber.replace(/\\/g, "%5C");
   return this._http.get(`${this.cfaBillUrl}byBillNumber?billNumber=${billNumber}`,
-  { headers: this.setAuthenticationHeader() })
-    .pipe(map((res: any) => res.json()));
+  { headers: this.setAuthenticationHeader() });
 }
 getCfaBillDetails(billNumber : any, vendorCode : any):Observable<any> {
   return this._http.get(`${this.cfaBillUrl}findCfaBills?billNumber=${billNumber}&vendorCode=${vendorCode}`,
-  { headers: this.setAuthenticationHeader() })
-    .pipe(map((res: any) => res.json()));
+  { headers: this.setAuthenticationHeader() });
 }
 addPurchaseMaterial(data : any, dueDtForPayment : any):Observable<any> {
   data.dueDateForPayment = dueDtForPayment;
   console.log(JSON.stringify(data));
-  return this._http.post(this.purchaseMaterialUrl, data, { headers: this.setAuthenticationHeader() }).pipe(map((res: any) => res.json()));
+  return this._http.post(this.purchaseMaterialUrl, data, { headers: this.setAuthenticationHeader() });
 }
 getPurchaseMaterialList(page : any):Observable<any> {
   return this._http.get(this.purchaseMaterialUrl + 'listPurchaseMaterials?' + 'page=' + (page - 1),
-  { headers: this.setAuthenticationHeader() })
-    .pipe(map((res: any) => res.json()));
+  { headers: this.setAuthenticationHeader() });
 }
 getPurchaseMaterialDetails(billNumber : any, vendorCode : any):Observable<any> {
   return this._http.get(`${this.purchaseMaterialUrl}findPurchaseMaterials?billNumber=${billNumber}&vendorCode=${vendorCode}`,
-    { headers: this.setAuthenticationHeader() })
-    .pipe(map((res: any) => res.json()));
+    { headers: this.setAuthenticationHeader() });
 }
 getPurchaseMaterialByBillNumber(billNumber : any):Observable<any> {
   billNumber = billNumber.replace(/\\/g, "%5C");
   return this._http.get(`${this.purchaseMaterialUrl}byBillNumber?billNumber=${billNumber}`,
-  { headers: this.setAuthenticationHeader() })
-    .pipe(map((res: any) => res.json()));
+  { headers: this.setAuthenticationHeader() });
 }
 updatePurchaseService(data: any, serialNumber : any):Observable<any> {
   return this._http.put(`${this.purchaseServiceUrl}${serialNumber}`, data,
-  { headers: this.setAuthenticationHeader() }).pipe(map((res: any) => res.json()));
+  { headers: this.setAuthenticationHeader() });
 }
 updatePurchaseMaterial(data: any, serialNumber: any):Observable<any> {
   return this._http.put(`${this.purchaseMaterialUrl}${serialNumber}`, data,
-  { headers: this.setAuthenticationHeader() }).pipe(map((res: any) => res.json()));
+  { headers: this.setAuthenticationHeader() });
 }
 updateCfaBill(data : any, serialNumber : any):Observable<any> {
   return this._http.put(`${this.cfaBillUrl}${serialNumber}`, data,
-  { headers: this.setAuthenticationHeader() }).pipe(map((res: any) => res.json()));
+  { headers: this.setAuthenticationHeader() });
 }
 updateTransportBill(data : any, serialNumber: any):Observable<any> {
   return this._http.put(`${this.transportBillUrl}${serialNumber}`, data,
-  { headers: this.setAuthenticationHeader() }).pipe(map((res: any) => res.json()));
+  { headers: this.setAuthenticationHeader() });
 }
 deleteTransportBill(id: any):Observable<any> {
-  return this._http.delete(this.transportBillUrl + (id), { headers: this.setAuthenticationHeader() }).pipe(map((res: any) => res));
+  return this._http.delete(this.transportBillUrl + (id), { headers: this.setAuthenticationHeader() });
 }
 deletePurchaseService(id : any):Observable<any> {
-  return this._http.delete(this.purchaseServiceUrl + (id), { headers: this.setAuthenticationHeader() }).pipe(map((res: any) => res));
+  return this._http.delete(this.purchaseServiceUrl + (id), { headers: this.setAuthenticationHeader() });
 }
 deletePurchaseMaterial(id: any):Observable<any> {
-  return this._http.delete(this.purchaseMaterialUrl + (id), { headers: this.setAuthenticationHeader() }).pipe(map((res: any) => res));
+  return this._http.delete(this.purchaseMaterialUrl + (id), { headers: this.setAuthenticationHeader() });
 }
 deleteCfaBill(id: any):Observable<any> {
-  return this._http.delete(this.cfaBillUrl + (id), { headers: this.setAuthenticationHeader() }).pipe(map((res: any) => res));
+  return this._http.delete(this.cfaBillUrl + (id), { headers: this.setAuthenticationHeader() });
 }
 sendEmail(req: any):Observable<any> {
   return this._http
-  .post(this.emailUrl, JSON.parse(req._body))
-  .pipe(map((res : any) => res));
+  .post(this.emailUrl, JSON.parse(req._body));
 }
 getEmailData(status: any, billType: any):Observable<any> {
-  return this._http.get(this.emailDataUrl+'getMailDetails/'+status+'/'+billType, { headers: this.setAuthenticationHeader() }).pipe(map((res: any) => res));
+  return this._http.get(this.emailDataUrl+'getMailDetails/'+status+'/'+billType, { headers: this.setAuthenticationHeader() });
 }
 updateEmailData(data: any, status: any, billType: any):Observable<any> {
   return this._http.put(`${this.emailDataUrl}${status}/${billType}?emailIds=${data}`, data,
-  { headers: this.setAuthenticationHeader() }).pipe(map((res: any) => res.json()));
+  { headers: this.setAuthenticationHeader() });
 }
 verifyTransportBill(billNumber: any, vendorCode: any, billCategory: any):Observable<any> {
-  return this._http.get(this.transportBillUrl+'verifyVendorBill?billNumber='+billNumber+'&vendorCode='+vendorCode+'&billCategory='+billCategory, { headers: this.setAuthenticationHeader() }).pipe(map((res: any) => res.json()));
+  return this._http.get(this.transportBillUrl+'verifyVendorBill?billNumber='+billNumber+'&vendorCode='+vendorCode+'&billCategory='+billCategory, { headers: this.setAuthenticationHeader() });
 }
 reVerifyTransportBill(formData: any):Observable<any> {
-  return this._http.post(this.transportBillUrl+'reVerifyVendorBill', formData,  { headers: this.setAuthenticationHeader() }).pipe(map((res: any) => res.json()));
+  return this._http.post(this.transportBillUrl+'reVerifyVendorBill', formData,  { headers: this.setAuthenticationHeader() });
 }
 submitTripVerificationStatus(formData: any):Observable<any> {
-  return this._http.post(this.transportBillUrl+'submitBillStatus', formData,  { headers: this.setAuthenticationHeader() }).pipe(map((res: any) => res.json()));
+  return this._http.post(this.transportBillUrl+'submitBillStatus', formData,  { headers: this.setAuthenticationHeader() });
 }
 }
